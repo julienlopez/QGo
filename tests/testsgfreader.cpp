@@ -19,8 +19,8 @@ void TestSGFReader::testSimpleRead()
     GobanMakingHelper::buildGoban(goban, 9, blackMoves, whiteMoves);
 
     QCOMPARE((uint8_t)9, goban->size());
-    for(u_int8_t x = 0; x < goban->size(); x++)
-        for(u_int8_t y = 0; y < goban->size(); y++)
+    for(uint8_t x = 0; x < goban->size(); x++)
+        for(uint8_t y = 0; y < goban->size(); y++)
         {
             Goban::Case c = (*goban)(x, y);
             if(std::find(blackMoves.begin(), blackMoves.end(), Point(x, y)) != blackMoves.end())

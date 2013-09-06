@@ -16,7 +16,7 @@ void GobanMakingHelper::buildGoban(QGo::goban_sp goban, uint8_t size, const QGo:
     g.loadMovesOnto(goban);
 }
 
-std::string GobanMakingHelper::encodeInt8(u_int8_t i)
+std::string GobanMakingHelper::encodeInt8(uint8_t i)
 {
     if(i < 27) return std::string(1, 'a' + i);
     return std::string(1, 'A'+(i-27));
