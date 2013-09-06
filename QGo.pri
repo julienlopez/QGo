@@ -1,0 +1,28 @@
+QGO_ROOT = $$PWD
+
+QGO_INCLUDE = $$QGO_ROOT/include/ 
+
+QGO_BIN = $$QGO_ROOT/bin
+
+QGO_OBJ = $$QGO_ROOT/obj
+
+QGO_MOC = $$QGO_ROOT/moc
+
+QGO_OBJ_TESTS = $$QGO_ROOT/obj_tests
+
+QGO_MOC_TESTS = $$QGO_ROOT/moc_tests
+
+QGO_SRC = $$QGO_ROOT/src
+
+#QGO_INSTALL_PLUGINS = $$QGO_BIN/plugins
+
+#INCLUDEPATH += $$QGO_ROOT/common/
+
+#INCLUDEPATH += $$QGO_INCLUDE
+
+#DEPENDPATH += $$QGO_INCLUDE
+
+DESTDIR = $$QGO_BIN
+
+QMAKE_CXXFLAGS += -std=c++11
+# -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline -Wno-long-long -Wuninitialized -Wconversion

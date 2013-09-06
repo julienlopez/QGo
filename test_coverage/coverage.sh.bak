@@ -1,0 +1,20 @@
+#!/bin/bash
+
+rm *.gcov
+
+lcov --zerocounters --directory ../obj_tests --directory .
+lcov --capture --initial --directory ../obj_tests --directory . --output-file coverage.info
+
+echo "running tests"
+../bin/tests
+echo "tests done"
+
+echo "running gcov"
+gcov ../src/*.cpp -o ../obj_tests
+echo "gcov done"
+
+echo "running lcov"
+lcov --capture --directory ../obj_tests --directory . --output-file coverage.info --no-checksum
+genhtml -o html coverage.info
+echo "lcov done"
+
