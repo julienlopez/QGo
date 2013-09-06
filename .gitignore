@@ -11,3 +11,12 @@
 *.lai
 *.la
 *.a
+
+obj/*
+obj_tests/*
+moc/*
+moc_tests/*
+bin/QGo*
+bin/tests*
+*.pro.user
+QGo.pri
