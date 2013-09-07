@@ -65,6 +65,8 @@ public:
     const std::string& date() const;
     const std::string& information() const;
 
+    const std::string& application() const;
+
     //setters
     void setKomi(double k);
     void setNbHandicapStones(uint8_t n);
@@ -87,6 +89,8 @@ public:
     void setDate(const std::string& date);
     void setInformation(const std::string& information);
 
+    void setApplication(const std::string& application);
+
     //moves related methods:
     void addMove(const Point& position, Goban::Case color);
 
@@ -96,6 +100,10 @@ public:
     void loadMovesOnto(QGo::goban_wp goban) const;
 
     bool hasAlternativeMoves() const;
+
+    void startAlternativePath();
+
+    void endAlternativePath();
 
 private:
     double m_komi;
@@ -109,8 +117,9 @@ private:
     uint8_t m_boardSize;
     std::string m_ruleSet;
     std::string m_gamePlace;
-    std::string d_date;
-    std::string d_information;
+    std::string m_date;
+    std::string m_information;
+    std::string m_application;
 
 //    std::vector<Move> m_moves;
 

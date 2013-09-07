@@ -180,7 +180,7 @@ void TestSGFReader::testSkipEmptyLine()
 void TestSGFReader::testThrowOnInvalidLine()
 {
     QGo::goban_sp goban(new Goban(0));
-    std::list<std::string> lines = {{"SZ[9]"}, {"a"}};
+    std::list<std::string> lines = {{"SZ[9]"}, {"a[15]"}};
     Game g;
     EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::UnreckognizedCommand);
 }

@@ -160,6 +160,11 @@ private:
     */
     static void parseW(Game& game, std::string line);
 
+    /**
+    * \brief AP: defines the application used to create this sgf file
+    */
+    static void parseAP(Game& game, std::string line);
+
     //helper functions
     static bool startsWith(const std::string& str, const std::string& begin);
 

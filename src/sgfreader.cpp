@@ -35,10 +35,11 @@ SGFReader::Dispatch::Dispatch()
     s_map.insert(make_pair("FF", &SGFReader::parseFF));
     s_map.insert(make_pair("GM", &SGFReader::parseGM));
     s_map.insert(make_pair("PC", &SGFReader::parsePC));
-    s_map.insert(make_pair(";B", &SGFReader::parseB));
-    s_map.insert(make_pair(";W", &SGFReader::parseW));
-//    s_map.insert(make_pair("B", &SGFReader::parseB));
-//    s_map.insert(make_pair("W", &SGFReader::parseW));
+//    s_map.insert(make_pair(";B", &SGFReader::parseB));
+//    s_map.insert(make_pair(";W", &SGFReader::parseW));
+    s_map.insert(make_pair("B", &SGFReader::parseB));
+    s_map.insert(make_pair("W", &SGFReader::parseW));
+    s_map.insert(make_pair("AP", &SGFReader::parseAP));
 }
 
 const SGFReader::Dispatch::type_map& SGFReader::Dispatch::map() const
@@ -64,19 +65,23 @@ Game SGFReader::parse(const std::list<std::string>& lst)
 
 void SGFReader::parseLine(Game& game, std::string line)
 {
-    while(!line.empty() && isspace(*line.begin())) line.erase(0, 1);
+    while(!line.empty() && (isspace(line.front()) || line.front() == ';')) line.erase(0, 1);
     if(line.empty()) return;
 
     for(Dispatch::type_map::const_iterator i = s_dispatch.map().begin(); i != s_dispatch.map().end(); ++i)
     {
-        if(!startsWith(line, i->first)) continue;
+        std::size_t pos_bracket = line.find('[');
+        if(pos_bracket == std::string::npos)
+            throw InvalidLine(line);
+
+        if(line.substr(0, pos_bracket) != i->first) continue;
         line.erase(0, i->first.size());
 
         if(line.size() < 3 || *line.begin() != '[' || *(--line.end()) != ']')
             throw InvalidLine(line);
         line.erase(0, 1);
         line.pop_back();
-        std::size_t pos_bracket = line.find(']');
+        pos_bracket = line.find(']');
         if(pos_bracket != std::string::npos) //several instructions on a single line!!
         {
             std::string leftOver = line.substr(pos_bracket + 1) + ']';
@@ -195,6 +200,11 @@ void SGFReader::parseW(Game& game, std::string line)
 {
     Point p = parsePoint(line);
     game.addMove(p, Goban::WHITE);
+}
+
+void SGFReader::parseAP(Game& game, std::string line)
+{
+    game.setApplication(line);
 }
 
 bool SGFReader::startsWith(const std::string& str, const std::string& begin)

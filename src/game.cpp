@@ -109,12 +109,17 @@ const std::string& Game::gamePlace() const
 
 const std::string& Game::date() const
 {
-    return d_date;
+    return m_date;
 }
 
 const std::string& Game::information() const
 {
-    return d_information;
+    return m_information;
+}
+
+const std::string& Game::application() const
+{
+    return m_application;
 }
 
 void Game::setKomi(double k)
@@ -184,12 +189,17 @@ void Game::setGamePlace(const std::string& gp)
 
 void Game::setDate(const std::string& d)
 {
-    d_date = d;
+    m_date = d;
 }
 
 void Game::setInformation(const std::string& info)
 {
-    d_information = info;
+    m_information = info;
+}
+
+void Game::setApplication(const std::string& app)
+{
+    m_application = app;
 }
 
 void Game::addMove(const Point& position, Goban::Case color)
@@ -261,4 +271,14 @@ bool Game::hasAlternativeMoves() const
         children = m_gameTree.children(children.front());
     }
     return false;
+}
+
+void Game::startAlternativePath()
+{
+
+}
+
+void Game::endAlternativePath()
+{
+
 }
