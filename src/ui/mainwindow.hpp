@@ -7,6 +7,7 @@
 
 class GobanWidget;
 class GameTreeWidget;
+class TreeModel;
 
 class MainWindow : public QMainWindow, public iMainWindow
 {
@@ -22,6 +23,7 @@ public:
 
 private:
     GobanWidget* m_screen;
+    TreeModel* m_model;
     GameTreeWidget* m_gameTree;
     QAction* m_actionOpenFile;
 

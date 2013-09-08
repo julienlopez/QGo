@@ -7,6 +7,7 @@
 #include "statetoolbaraction.hpp"
 #include <states/statemanager.hpp>
 #include "gametreewidget.hpp"
+#include <treemodel.hpp>
 
 #include <QFileDialog>
 #include <QMenuBar>
@@ -25,6 +26,8 @@ MainWindow::MainWindow(QWidget* p)
     QVBoxLayout* vbLayout = new QVBoxLayout;
     m_screen = new GobanWidget;
     vbLayout->addWidget(m_screen);
+
+    m_model = new TreeModel;
 
 //    m_gameTree = new GameTreeWidget;
 //    layout->addWidget(m_gameTree);

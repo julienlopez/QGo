@@ -68,7 +68,7 @@ public:
 
     vertex_descriptor parent(vertex_descriptor v) const
     {
-        typename boost::graph_traits<graph_type>::inv_adjacency_iterator i, i_end;
+        typename graph_type::inv_adjacency_iterator i, i_end;
         boost::tie(i, i_end) = boost::inv_adjacent_vertices(v, m_graph);
         assert(std::distance(i, i_end) == 1);
         return *i;
@@ -83,23 +83,31 @@ public:
         return res;
     }
 
-    list_vertex_descriptor child(vertex_descriptor v, std::size_t pos) const
+    vertex_descriptor child(vertex_descriptor v, std::size_t pos) const
     {
-        assert(pos < nbChildren());
+        assert(pos < nbChildren(v));
         typename boost::graph_traits<graph_type>::adjacency_iterator i, i_end;
         boost::tie(i, i_end) = boost::adjacent_vertices(v, m_graph);
         std::advance(i, pos);
         return *i;
     }
 
-    list_vertex_descriptor nbChildren(vertex_descriptor v) const
+    std::size_t nbChildren(vertex_descriptor v) const
     {
         typename boost::graph_traits<graph_type>::adjacency_iterator i, i_end;
         boost::tie(i, i_end) = boost::adjacent_vertices(v, m_graph);
         return std::distance(i, i_end);
     }
 
-
+    std::size_t positionFromParent(vertex_descriptor v) const
+    {
+        vertex_descriptor p = parent(v);
+        list_vertex_descriptor ch = children(p);
+        assert(!ch.empty());
+        typename list_vertex_descriptor::const_iterator i = std::find(ch.cbegin(), ch.cend(), v);
+        assert(i != ch.end());
+        return std::distance(ch.cbegin(), i);
+    }
 
 private:
     graph_type m_graph;
