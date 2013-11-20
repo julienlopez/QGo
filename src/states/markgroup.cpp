@@ -1,5 +1,4 @@
 #include "markgroup.hpp"
-#include "statefactory.hpp"
 #include <goban.hpp>
 #include <ui/imainwindow.hpp>
 

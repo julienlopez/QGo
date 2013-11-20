@@ -1,7 +1,6 @@
 #ifndef CRTP_SYSTEM_HPP
 #define CRTP_SYSTEM_HPP
 
-#include "state.hpp"
 #include "statefactory.hpp"
 
 template<class T> class CRTP_State : public State
