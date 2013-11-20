@@ -43,7 +43,7 @@ void GobanWidget::mouseMoveEvent(QMouseEvent * evt)
     double ratio, dx, dy;
     std::tie(gobanSize, ratio, dx, dy) = computeScreenSizes(goban);
 
-    QPoint position = QPointF(((evt->pos().x() - dx) / ratio) + .5, ((evt->pos().y() - dy) / ratio) + .5).toPoint();
+    QPoint position = QPointF(((evt->pos().x() - dx) / ratio), ((evt->pos().y() - dy) / ratio)).toPoint();
     if(position.x() > gobanSize || position.y() > gobanSize) return;
     if(position == m_mousePosition) return;
 
@@ -60,6 +60,7 @@ void GobanWidget::mousePressEvent(QMouseEvent* evt)
         QGo::goban_sp goban = g.lock();
         if(!goban.get()) return;
         currentState->leftClick(goban, (uint8_t)m_mousePosition.x(), (uint8_t)m_mousePosition.y());
+        update();
     }
     catch(std::logic_error& err) {
         return;
@@ -81,17 +82,23 @@ void GobanWidget::paintEvent(QPaintEvent* evt)
     p.translate(std::get<2>(sizes), std::get<3>(sizes));
     p.scale(ratio, ratio);
 
+    QPen pen = p.pen();
+    pen.setWidth(0);
+    p.setPen(pen);
+
     drawBackground(p, gobanSize);
     drawStones(p, goban);
     drawMarkedGroups(p, goban);
 
     //drawing current mouse position
+    pen.setColor(Qt::red);
+    p.setPen(pen);
     p.drawEllipse(QPointF(m_mousePosition), 0.5, 0.5);
 }
 
 GobanWidget::type_tuple_sizes GobanWidget::computeScreenSizes(QGo::goban_sp goban)
 {
-    uint8_t gobanSize = goban->size();
+    uint8_t gobanSize = goban->size() - 1;
     double ratio = (double)std::min(width()-c_marge, height()-c_marge) / (gobanSize+2);
     double tx = (width() - ratio * gobanSize) / 2;
     double ty = (height() - ratio * gobanSize) / 2;
@@ -110,19 +117,19 @@ void GobanWidget::drawStones(QPainter& p, QGo::goban_sp goban)
 {
     p.save();
     uint8_t gobanSize = goban->size();
-    for(uint8_t i = 0; i <= gobanSize; i++)
+    for(uint8_t i = 0; i < gobanSize; i++)
     {
-        p.drawLine(i, 0, i, gobanSize);
-        p.drawLine(0, i, gobanSize, i);
+        p.drawLine(i, 0, i, gobanSize-1);
+        p.drawLine(0, i, gobanSize-1, i);
     }
 
     for(uint8_t px = 0; px < gobanSize; px++)
         for(uint8_t py = 0; py < gobanSize; py++)
         {
-            Goban::Case c = (*goban)(px, py);
-            if(c != Goban::EMPTY)
+            QGo::Case c = (*goban)(px, py);
+            if(c != QGo::EMPTY)
             {
-                if(c == Goban::BLACK) p.setBrush(QBrush(Qt::black));
+                if(c == QGo::BLACK) p.setBrush(QBrush(Qt::black));
                 else p.setBrush(QBrush(Qt::white));
                 p.drawEllipse(QPointF(px, py), 0.5, 0.5);
             }
@@ -143,8 +150,8 @@ void GobanWidget::drawGroup(QPainter& p, QGo::goban_sp goban, const QGo::type_li
 
     p.save();
     QPen pen = p.pen();
-    Goban::Case c = (*goban)(group.front().x(), group.front().y());
-    if(c == Goban::EMPTY || c == Goban::WHITE)
+    QGo::Case c = (*goban)(group.front().x(), group.front().y());
+    if(c == QGo::EMPTY || c == QGo::WHITE)
         pen.setColor(Qt::black);
     else pen.setColor(Qt::white);
     pen.setWidthF(.1);

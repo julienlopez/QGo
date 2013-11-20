@@ -17,20 +17,22 @@
 #include <QMessageBox>
 #include <QActionGroup>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 MainWindow::MainWindow(QWidget* p)
     : QMainWindow(p)
 {
     QWidget* w = new QWidget;
 
-    QVBoxLayout* vbLayout = new QVBoxLayout;
+    QHBoxLayout* vbLayout = new QHBoxLayout;
     m_screen = new GobanWidget;
     vbLayout->addWidget(m_screen);
 
     m_model = new TreeModel;
 
-//    m_gameTree = new GameTreeWidget;
-//    layout->addWidget(m_gameTree);
+    m_gameTree = new GameTreeWidget;
+    m_gameTree->setModel(m_model);
+    vbLayout->addWidget(m_gameTree);
 
     w->setLayout(vbLayout);
     setCentralWidget(w);
@@ -133,6 +135,8 @@ void MainWindow::onActionOpenFile()
         Game g = SGFReader::parse(lines);
         qDebug() << QString::fromStdString(g.report());
         g.loadMovesOnto(Engine::instance().goban());
+        m_model->setTree(g.tree());
+        m_gameTree->update();
     }
     catch(SGFReader::InvalidLine& ex)
     {

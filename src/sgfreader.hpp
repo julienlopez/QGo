@@ -166,7 +166,6 @@ private:
     static void parseAP(Game& game, std::string line);
 
     //helper functions
-    static bool startsWith(const std::string& str, const std::string& begin);
 
     static uint8_t parseUInt8(const std::string& line);
 

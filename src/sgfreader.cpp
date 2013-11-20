@@ -1,6 +1,5 @@
 #include "sgfreader.hpp"
 #include "game.hpp"
-#include "point.hpp"
 
 #include <sstream>
 
@@ -35,8 +34,6 @@ SGFReader::Dispatch::Dispatch()
     s_map.insert(make_pair("FF", &SGFReader::parseFF));
     s_map.insert(make_pair("GM", &SGFReader::parseGM));
     s_map.insert(make_pair("PC", &SGFReader::parsePC));
-//    s_map.insert(make_pair(";B", &SGFReader::parseB));
-//    s_map.insert(make_pair(";W", &SGFReader::parseW));
     s_map.insert(make_pair("B", &SGFReader::parseB));
     s_map.insert(make_pair("W", &SGFReader::parseW));
     s_map.insert(make_pair("AP", &SGFReader::parseAP));
@@ -68,6 +65,17 @@ void SGFReader::parseLine(Game& game, std::string line)
     while(!line.empty() && (isspace(line.front()) || line.front() == ';')) line.erase(0, 1);
     if(line.empty()) return;
 
+    if(line == "(")
+    {
+        game.startAlternativePath();
+        return;
+    }
+    else if(line == ")")
+    {
+        game.endAlternativePath();
+        return;
+    }
+
     for(Dispatch::type_map::const_iterator i = s_dispatch.map().begin(); i != s_dispatch.map().end(); ++i)
     {
         std::size_t pos_bracket = line.find('[');
@@ -86,11 +94,11 @@ void SGFReader::parseLine(Game& game, std::string line)
         {
             std::string leftOver = line.substr(pos_bracket + 1) + ']';
             line = line.substr(0, pos_bracket);
+            i->second(game, line);
             parseLine(game, leftOver);
         }
-        i->second(game, line);
+        else i->second(game, line);
         return;
-
     }
     throw UnreckognizedCommand(line);
 }
@@ -193,26 +201,18 @@ void SGFReader::parsePC(Game& game, std::string line)
 void SGFReader::parseB(Game& game, std::string line)
 {
     Point p = parsePoint(line);
-    game.addMove(p, Goban::BLACK);
+    game.addMove(p, QGo::BLACK);
 }
 
 void SGFReader::parseW(Game& game, std::string line)
 {
     Point p = parsePoint(line);
-    game.addMove(p, Goban::WHITE);
+    game.addMove(p, QGo::WHITE);
 }
 
 void SGFReader::parseAP(Game& game, std::string line)
 {
     game.setApplication(line);
-}
-
-bool SGFReader::startsWith(const std::string& str, const std::string& begin)
-{
-    if(str.size() < begin.size()) return false;
-    for(size_t i = 0; i < begin.size(); i++)
-        if(str[i] != begin[i]) return false;
-    return true;
 }
 
 uint8_t SGFReader::parseUInt8(const std::string& line)

@@ -1,13 +1,12 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "goban.hpp"
-#include "point.hpp"
+#include <point.hpp>
 
 #include <utils/boosttree.hpp>
 
-#include <vector>
 #include <string>
+#include <queue>
 
 class Game
 {
@@ -16,15 +15,15 @@ public:
     {
     public:
         Move();
-        Move(const Point& position, Goban::Case color);
+        Move(const Point& position, QGo::Case color);
 
         const Point& position() const;
-        Goban::Case color() const;
+        QGo::Case color() const;
 
     private:
         bool m_pass;
         Point m_position;
-        Goban::Case m_color;
+        QGo::Case m_color;
     };
 
     class Player
@@ -40,6 +39,8 @@ public:
         std::string m_name;
         std::string m_rank;
     };
+
+    typedef utils::BoostTree<Move> type_tree;
 
     Game();
 
@@ -92,7 +93,7 @@ public:
     void setApplication(const std::string& application);
 
     //moves related methods:
-    void addMove(const Point& position, Goban::Case color);
+    void addMove(const Point& position, QGo::Case color);
 
     //utility methods
     std::string report() const;
@@ -104,6 +105,8 @@ public:
     void startAlternativePath();
 
     void endAlternativePath();
+
+    const type_tree& tree() const;
 
 private:
     double m_komi;
@@ -121,17 +124,9 @@ private:
     std::string m_information;
     std::string m_application;
 
-//    std::vector<Move> m_moves;
-
-    /*
-    typedef std::unique_ptr<Move> move_up;
-    typedef utils::LinkedTree<move_up> type_tree;
-    type_tree m_movesTree;
-    */
-
-    typedef utils::BoostTree<Move> type_tree;
     type_tree m_gameTree;
     type_tree::vertex_descriptor m_currentNodeInGameTree;
+    std::queue<type_tree::vertex_descriptor> m_parentNodesOfAlternativePath;
 };
 
 #endif // GAME_HPP

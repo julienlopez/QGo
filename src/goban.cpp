@@ -3,14 +3,14 @@
 #include <algorithm>
 #include <cassert>
 
-Goban::Goban(uint8_t taille): m_size(taille), m_array(taille*taille, EMPTY)
+Goban::Goban(uint8_t size_): m_size(size_), m_array(pow(size_+1, 2), QGo::EMPTY)
 {}
 
 void Goban::resize(uint8_t newSize)
 {
     m_size = newSize;
     m_array.resize(newSize*newSize);
-    std::fill(m_array.begin(), m_array.end(), EMPTY);
+    std::fill(m_array.begin(), m_array.end(), QGo::EMPTY);
 }
 
 uint8_t Goban::size() const
@@ -18,14 +18,14 @@ uint8_t Goban::size() const
     return m_size;
 }
 
-void Goban::placeStone(uint8_t x, uint8_t y, Case color)
+void Goban::placeStone(uint8_t x, uint8_t y, QGo::Case color)
 {
     get(x, y) = color;
     checkForCapture(x, y);
     checkForSuicide(x, y);
 }
 
-const Goban::Case& Goban::operator()(uint8_t x, uint8_t y) const throw(std::invalid_argument)
+const QGo::Case& Goban::operator()(uint8_t x, uint8_t y) const throw(std::invalid_argument)
 {
     if(x >= m_size || y >= m_size) throw std::invalid_argument("Index out of bound");
     return m_array[m_size*y + x];
@@ -34,7 +34,7 @@ const Goban::Case& Goban::operator()(uint8_t x, uint8_t y) const throw(std::inva
 Goban::type_set_point Goban::computeGroup(uint8_t x, uint8_t y) const
 {
     type_set_point group;
-    if((*this)(x,y) == EMPTY) return group;
+    if((*this)(x,y) == QGo::EMPTY) return group;
     addStoneToGroup(group, Point(x, y));
     return group;
 }
@@ -50,7 +50,7 @@ Goban::type_set_point Goban::computeLiberties(uint8_t x, uint8_t y) const
         Goban::type_set_point adj = adjacentStones(point.x(), point.y());
         for(const Point& p : adj)
         {
-            if((*this)(p.x(), p.y()) == EMPTY)
+            if((*this)(p.x(), p.y()) == QGo::EMPTY)
                 res.insert(p);
         }
     }
@@ -62,7 +62,7 @@ std::size_t Goban::nbStonesPlaced() const
     return m_array.size();
 }
 
-Goban::Case& Goban::get(uint8_t x, uint8_t y) throw(std::invalid_argument)
+QGo::Case& Goban::get(uint8_t x, uint8_t y) throw(std::invalid_argument)
 {
     if(x >= m_size || y >= m_size) throw std::invalid_argument("Index out of bound");
     return m_array[m_size*y + x];
@@ -70,12 +70,12 @@ Goban::Case& Goban::get(uint8_t x, uint8_t y) throw(std::invalid_argument)
 
 void Goban::checkForCapture(uint8_t x, uint8_t y)
 {
-    Case color = (*this)(x ,y);
+    QGo::Case color = (*this)(x ,y);
     type_set_point adj = adjacentStones(x, y);
     for(const Point& p : adj)
     {
-        Case c = (*this)(p.x(), p.y());
-        if(c != color && c!= EMPTY && computeLiberties(p.x(), p.y()).empty())
+        QGo::Case c = (*this)(p.x(), p.y());
+        if(c != color && c!= QGo::EMPTY && computeLiberties(p.x(), p.y()).empty())
             removeGroup(p.x(), p.y());
     }
 }
@@ -100,8 +100,8 @@ void Goban::addStoneToGroup(type_set_point& set, const Point& p) const
 {
     std::pair<type_set_point::iterator, bool> pair = set.insert(p);
     if(!pair.second) return;
-    Case color = (*this)(p.x(), p.y());
-    assert(color != EMPTY);
+    QGo::Case color = (*this)(p.x(), p.y());
+    assert(color != QGo::EMPTY);
     type_set_point directs = adjacentStones(p.x(), p.y());
     for(const Point& point : directs)
     {
@@ -112,9 +112,9 @@ void Goban::addStoneToGroup(type_set_point& set, const Point& p) const
 
 void Goban::removeGroup(uint8_t x, uint8_t y)
 {
-    Case colorPlayed = (*this)(x, y);
-    assert(colorPlayed != EMPTY);
+    QGo::Case colorPlayed = (*this)(x, y);
+    assert(colorPlayed != QGo::EMPTY);
     type_set_point group = computeGroup(x, y); //computing the whole group of stone concerned
     for(const Point& p : group)
-        get(p.x(), p.y()) = EMPTY;
+        get(p.x(), p.y()) = QGo::EMPTY;
 }

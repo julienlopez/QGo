@@ -26,9 +26,13 @@ private slots:
     void testDateParsing();
     void testInformationParsing();
     void testRuleSetParsing();
+    void testApplicationParsing();
+
+    void testFullReport();
 
     void testSkipEmptyLine();
-    void testThrowOnInvalidLine();
+    void testThrowOnInvalidLine1();
+    void testThrowOnInvalidLine2();
     void testThrowOnInvalidReckognizedLine();
     void testThrowOnUnsupportedSgfFormat();
     void testNoThrowOnSupportedSgfFormat();
@@ -37,6 +41,8 @@ private slots:
 
     void testParseHighPosition();
     void testInvalidPosition();
+
+    void testParseAlternativeMove1();
 };
 
 #endif // TESTSGFREADER_HPP

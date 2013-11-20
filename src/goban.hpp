@@ -1,8 +1,7 @@
 #ifndef GOBAN_HPP
 #define GOBAN_HPP
 
-#include <globals.hpp>
-#include "point.hpp"
+#include <point.hpp>
 
 #include <set>
 #include <vector>
@@ -11,7 +10,6 @@
 class Goban
 {
 public:
-    enum Case {EMPTY = 0, BLACK, WHITE};
 
     typedef std::set<Point> type_set_point;
 
@@ -21,9 +19,9 @@ public:
 
     uint8_t size() const;
 
-    void placeStone(uint8_t x, uint8_t y, Case color);
+    void placeStone(uint8_t x, uint8_t y, QGo::Case color);
 
-    const Case& operator()(uint8_t x, uint8_t y) const throw(std::invalid_argument);
+    const QGo::Case& operator()(uint8_t x, uint8_t y) const throw(std::invalid_argument);
 
     type_set_point computeGroup(uint8_t x, uint8_t y) const;
 
@@ -39,11 +37,11 @@ public:
     std::size_t nbStonesPlaced() const;
 
 protected:
-    Case& get(uint8_t x, uint8_t y) throw(std::invalid_argument);
+    QGo::Case& get(uint8_t x, uint8_t y) throw(std::invalid_argument);
 
 private:
     uint8_t m_size;
-    std::vector<Case> m_array;
+    std::vector<QGo::Case> m_array;
 
     /**
     * \brief check if the move at (x,y) captures anything

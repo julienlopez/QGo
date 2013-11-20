@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "goban.hpp"
 
 #include <sstream>
 #include <cassert>
@@ -6,7 +7,7 @@
 Game::Move::Move(): m_pass(true), m_position(0, 0)
 {}
 
-Game::Move::Move(const Point& p, Goban::Case c): m_pass(false), m_position(p), m_color(c)
+Game::Move::Move(const Point& p, QGo::Case c): m_pass(false), m_position(p), m_color(c)
 {}
 
 const Point& Game::Move::position() const
@@ -14,7 +15,7 @@ const Point& Game::Move::position() const
     return m_position;
 }
 
-Goban::Case Game::Move::color() const
+QGo::Case Game::Move::color() const
 {
     return m_color;
 }
@@ -40,8 +41,7 @@ void Game::Player::setRank(const std::string& r)
 }
 
 Game::Game()
-{
-}
+{}
 
 double Game::komi() const
 {
@@ -202,9 +202,8 @@ void Game::setApplication(const std::string& app)
     m_application = app;
 }
 
-void Game::addMove(const Point& position, Goban::Case color)
+void Game::addMove(const Point& position, QGo::Case color)
 {
-//    m_moves.push_back(Move(position, color));
     if(m_gameTree.roots().empty())
     {
         m_currentNodeInGameTree = m_gameTree.addNode(Move(position, color));
@@ -239,12 +238,6 @@ void Game::loadMovesOnto(QGo::goban_wp g) const
     if(goban->size() != m_boardSize)
         goban->resize(m_boardSize);
 
-//    for(size_t i = 0; i < m_moves.size(); i++)
-//    {
-//        Move m = m_moves[i];
-//        goban->placeStone(m.position().x(), m.position().y(), m.color());
-//    }
-
     if(m_gameTree.roots().empty())
         return;
 
@@ -275,10 +268,17 @@ bool Game::hasAlternativeMoves() const
 
 void Game::startAlternativePath()
 {
-
+    m_parentNodesOfAlternativePath.push(m_currentNodeInGameTree);
 }
 
 void Game::endAlternativePath()
 {
+    assert(!m_parentNodesOfAlternativePath.empty());
+    m_currentNodeInGameTree = m_parentNodesOfAlternativePath.front();
+    m_parentNodesOfAlternativePath.pop();
+}
 
+const Game::type_tree& Game::tree() const
+{
+    return m_gameTree;
 }

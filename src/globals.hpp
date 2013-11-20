@@ -24,6 +24,8 @@ namespace QGo
     typedef std::weak_ptr<Goban> goban_wp;
 
     typedef std::list<Point> type_list_point;
+
+    enum Case {EMPTY = 0, BLACK, WHITE};
 }
 
 #endif // GLOBALS_HPP

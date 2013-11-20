@@ -64,7 +64,7 @@ void TestGoban::testPlaceStoneSuicide()
 //    QGo::type_list_point whiteMoves = {{Point(1,2), Point(2,2), Point(3,2), Point(0, 1)}};
     GobanMakingHelper::buildGoban(goban, 9, blackMoves, {{}});
     std::size_t nbStones = goban->nbStonesPlaced();
-    goban->placeStone(1, 1, Goban::Case::WHITE);
+    goban->placeStone(1, 1, QGo::Case::WHITE);
     QCOMPARE(nbStones, goban->nbStonesPlaced());
 }
 
@@ -75,8 +75,8 @@ void TestGoban::testPlaceStoneCapture()
     QGo::type_list_point whiteMoves = {{Point(1,1)}};
     GobanMakingHelper::buildGoban(goban, 9, blackMoves, whiteMoves);
     std::size_t nbStones = goban->nbStonesPlaced();
-    goban->placeStone(2, 1, Goban::Case::BLACK);
+    goban->placeStone(2, 1, QGo::Case::BLACK);
     QCOMPARE(nbStones, goban->nbStonesPlaced());
-    QCOMPARE(Goban::Case::EMPTY, (*goban)(1, 1));
-    QCOMPARE(Goban::Case::BLACK, (*goban)(2, 1));
+    QCOMPARE(QGo::Case::EMPTY, (*goban)(1, 1));
+    QCOMPARE(QGo::Case::BLACK, (*goban)(2, 1));
 }
