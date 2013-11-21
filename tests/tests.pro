@@ -28,6 +28,7 @@ SOURCES += main.cpp \
     ../src/game.cpp \
     ../src/goban.cpp \
     ../src/sgfreader.cpp \
+    ../src/scorecomputer.cpp \
     testsgfreader.cpp \
     testgoban.cpp \
     gobanmakinghelper.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     ../src/goban.hpp \
     ../src/sgfreader.hpp \
     ../src/utils/boosttree.hpp \
+    ../src/scorecomputer.hpp \
     testsgfreader.hpp \
     testgoban.hpp \
     gobanmakinghelper.hpp \

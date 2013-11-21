@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     ui/gametreewidget.cpp \
     ui/statetooltipsingleton.cpp \
     ui/statelesstooltipsingleton.cpp \
-    scorecomputer.cpp
+    scorecomputer.cpp \
+    ui/scorecomputeraction.cpp
 
 HEADERS  += ui/mainwindow.hpp \
     ui/gobanwidget.hpp \
