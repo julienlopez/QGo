@@ -235,6 +235,9 @@ void Game::loadMovesOnto(QGo::goban_wp g) const
 {
     QGo::goban_sp goban = g.lock();
     assert(goban);
+
+    goban->clear();
+
     if(goban->size() != m_boardSize)
         goban->resize(m_boardSize);
 

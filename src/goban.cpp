@@ -62,6 +62,11 @@ std::size_t Goban::nbStonesPlaced() const
     return m_array.size();
 }
 
+void Goban::clear()
+{
+    std::fill(m_array.begin(), m_array.end(), QGo::EMPTY);
+}
+
 QGo::Case& Goban::get(uint8_t x, uint8_t y) throw(std::invalid_argument)
 {
     if(x >= m_size || y >= m_size) throw std::invalid_argument("Index out of bound");

@@ -11,7 +11,7 @@ class Goban
 {
 public:
 
-    typedef std::set<Point> type_set_point;
+    typedef QGo::type_set_point type_set_point;
 
     Goban(uint8_t size);
 
@@ -35,6 +35,11 @@ public:
      * @return the number of stones placed on the goban
      */
     std::size_t nbStonesPlaced() const;
+
+    /**
+     * @brief clear reset the board clean, removing all the stones.
+     */
+    void clear();
 
 protected:
     QGo::Case& get(uint8_t x, uint8_t y) throw(std::invalid_argument);
