@@ -23,14 +23,16 @@ SOURCES += main.cpp\
     states/statemanager.cpp \
     utils/utils.cpp \
     states/placestone.cpp \
-    ui/tooltipsingleton.cpp \
     states/markgroup.cpp \
     states/countliberties.cpp \
     ui/statetoolbaraction.cpp \
     ui/imainwindow.cpp \
     states/markliberties.cpp \
     treemodel.cpp \
-    ui/gametreewidget.cpp
+    ui/gametreewidget.cpp \
+    ui/statetooltipsingleton.cpp \
+    ui/statelesstooltipsingleton.cpp \
+    scorecomputer.cpp
 
 HEADERS  += ui/mainwindow.hpp \
     ui/gobanwidget.hpp \
@@ -54,7 +56,6 @@ HEADERS  += ui/mainwindow.hpp \
     utils/factory.hpp \
     utils/parametertrait.hpp \
     states/crtp_state.hpp \
-    ui/tooltipsingleton.hpp \
     states/markgroup.hpp \
     states/countliberties.hpp \
     ui/statetoolbaraction.hpp \
@@ -63,4 +64,7 @@ HEADERS  += ui/mainwindow.hpp \
     utils/tree.hpp \
     utils/boosttree.hpp \
     treemodel.hpp \
-    ui/gametreewidget.hpp
+    ui/gametreewidget.hpp \
+    ui/statetooltipsingleton.hpp \
+    ui/statelesstooltipsingleton.hpp \
+    scorecomputer.hpp

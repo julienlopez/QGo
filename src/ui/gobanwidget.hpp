@@ -45,7 +45,7 @@ private:
     void drawStones(QPainter& p, QGo::goban_sp goban);
     void drawMarkedGroups(QPainter& p, QGo::goban_sp goban);
     void drawGroup(QPainter& p, QGo::goban_sp goban, const QGo::type_list_point& group);
-    void drawShape(QPainter& p, const Point& point);
+    static void drawShape(QPainter& p, const Point& point);
 
 signals:
 
