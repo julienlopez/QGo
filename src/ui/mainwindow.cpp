@@ -3,7 +3,8 @@
 #include "sgfreader.hpp"
 #include "game.hpp"
 #include "engine.hpp"
-#include "tooltipsingleton.hpp"
+#include "statelesstooltipsingleton.hpp"
+#include "statetooltipsingleton.hpp"
 #include "statetoolbaraction.hpp"
 #include <states/statemanager.hpp>
 #include "gametreewidget.hpp"
@@ -74,14 +75,22 @@ void MainWindow::createMenuBars()
 
 void MainWindow::createToolBar()
 {
-    QToolBar *toolBarStates = addToolBar(tr("Actions"));
+    QToolBar *toolBarStates = addToolBar(tr("Actions with state"));
 
     QActionGroup* group = new QActionGroup(this);
-    ToolTipSingleton::for_each([this, toolBarStates, group](std::size_t stateId, const std::string& tooltip, const std::string& icon)
+    StateToolTipSingleton::for_each([toolBarStates, group](std::size_t stateId, const std::string& tooltip, const std::string& icon)
     {
-        QAction* action = new StateToolBarAction(stateId, QIcon("icons/"+QString::fromStdString(icon)), QString::fromStdString(tooltip), this);
+        QAction* action = new StateToolBarAction(stateId, QIcon("icons/"+QString::fromStdString(icon)), QString::fromStdString(tooltip));
         toolBarStates->addAction(action);
         group->addAction(action);
+    });
+
+    QToolBar* toolBarStateless = addToolBar(tr("Action with no state"));
+    StatelessToolTipSingleton::for_each([this, toolBarStateless](const std::string& tooltip, const std::string& icon, std::function<void()> callback)
+    {
+        QAction* action = new QAction(QIcon("icons/"+QString::fromStdString(icon)), QString::fromStdString(tooltip), nullptr);
+        QObject::connect(action, &QAction::triggered, callback);
+        toolBarStateless->addAction(action);
     });
 }
 

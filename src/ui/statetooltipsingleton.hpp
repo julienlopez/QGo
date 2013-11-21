@@ -1,12 +1,12 @@
-#ifndef TOOLTIPSINGLETON_HPP
-#define TOOLTIPSINGLETON_HPP
+#ifndef STATETOOLTIPSINGLETON_HPP
+#define STATETOOLTIPSINGLETON_HPP
 
 #include <utils/singleton.hpp>
 #include <map>
 
-class ToolTipSingleton : utils::singleton<ToolTipSingleton>
+class StateToolTipSingleton : utils::singleton<StateToolTipSingleton>
 {
-    friend class utils::singleton<ToolTipSingleton>;
+    friend class utils::singleton<StateToolTipSingleton>;
 public:
     typedef std::map<std::size_t, std::pair<std::string, std::string>> type_map;
 
@@ -21,7 +21,7 @@ public:
     }
 
 protected:
-    ToolTipSingleton() = default;
+    StateToolTipSingleton() = default;
 
 private:
     type_map m_map;

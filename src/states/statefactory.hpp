@@ -5,7 +5,7 @@
 
 #include <utils/factorywithautoid.hpp>
 
-#include <ui/tooltipsingleton.hpp>
+#include <ui/statetooltipsingleton.hpp>
 
 struct StateFactory
 {
@@ -14,7 +14,7 @@ struct StateFactory
 
     static type_factory::type_identifier registerProduct(type_factory::type_product_creator creator, std::string&& tooltip, std::string&& icone) {
         type_factory::type_identifier id = type_factory::registerProduct(creator);
-        ToolTipSingleton::addToolButton(id, std::move(tooltip), std::move(icone));
+        StateToolTipSingleton::addToolButton(id, std::move(tooltip), std::move(icone));
         return id;
     }
 
