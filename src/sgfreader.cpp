@@ -38,6 +38,8 @@ SGFReader::Dispatch::Dispatch()
     s_map.insert(make_pair("W", &SGFReader::parseW));
     s_map.insert(make_pair("AP", &SGFReader::parseAP));
     s_map.insert(make_pair("US", &SGFReader::parseUS));
+    s_map.insert(make_pair("RE", &SGFReader::parseRE));
+    s_map.insert(make_pair("TM", &SGFReader::parseTM));
 }
 
 const SGFReader::Dispatch::type_map& SGFReader::Dispatch::map() const
@@ -106,22 +108,22 @@ void SGFReader::parseLine(Game& game, std::string line)
 
 void SGFReader::parseGC(Game& game, std::string line)
 {
-    game.setInformation(line);
+    game.m_information = line;
 }
 
 void SGFReader::parseGN(Game& game, std::string line)
 {
-    game.setName(line);
+    game.m_name = line;
 }
 
 void SGFReader::parseHA(Game& game, std::string line)
 {
-    game.setNbHandicapStones(parseUInt8(line));
+    game.m_nbHandicapStones = parseUInt8(line);
 }
 
 void SGFReader::parseKM(Game& game, std::string line)
 {
-    game.setKomi(parseDouble(line));
+    game.m_komi = parseDouble(line);
 }
 
 void SGFReader::parseTB(Game& game, std::string line)
@@ -136,7 +138,7 @@ void SGFReader::parseTW(Game& game, std::string line)
 
 void SGFReader::parseDT(Game& game, std::string line)
 {
-    game.setDate(line);
+    game.m_date = line;
 }
 
 void SGFReader::parsePB(Game& game, std::string line)
@@ -161,27 +163,27 @@ void SGFReader::parseWR(Game& game, std::string line)
 
 void SGFReader::parseOT(Game& game, std::string line)
 {
-    game.setOvertimeSystem(line);
+    game.m_overtimeSystem = line;
 }
 
 void SGFReader::parseCP(Game& game, std::string line)
 {
-    game.setCopyright(line);
+    game.m_copyright = line;
 }
 
 void SGFReader::parseEV(Game& game, std::string line)
 {
-    game.setEventName(line);
+    game.m_eventName = line;
 }
 
 void SGFReader::parseSZ(Game& game, std::string line)
 {
-    game.setBoardSize(parseUInt8(line));
+    game.m_boardSize = parseUInt8(line);
 }
 
 void SGFReader::parseRU(Game& game, std::string line)
 {
-    game.setRuleSet(line);
+    game.m_ruleSet = line;
 }
 
 void SGFReader::parseFF(Game& /*game*/, std::string line)
@@ -196,7 +198,7 @@ void SGFReader::parseGM(Game& /*game*/, std::string line)
 
 void SGFReader::parsePC(Game& game, std::string line)
 {
-    game.setGamePlace(line);
+    game.m_gamePlace = line;
 }
 
 void SGFReader::parseB(Game& game, std::string line)
@@ -213,12 +215,22 @@ void SGFReader::parseW(Game& game, std::string line)
 
 void SGFReader::parseAP(Game& game, std::string line)
 {
-    game.setApplication(line);
+    game.m_application = line;
 }
 
 void SGFReader::parseUS(Game& game, std::string line)
 {
-    game.setUser(line);
+    game.m_user = line;
+}
+
+void SGFReader::parseRE(Game& game, std::string line)
+{
+    game.m_result = line;
+}
+
+void SGFReader::parseTM(Game& game, std::string line)
+{
+    game.m_timeLimit = line;
 }
 
 uint8_t SGFReader::parseUInt8(const std::string& line)

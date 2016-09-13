@@ -11,7 +11,7 @@ CONFIG -= app_bundle
 OBJECTS_DIR = $$QGO_OBJ_TESTS
 MOC_DIR = $$QGO_MOC_TESTS
 
-INCLUDEPATH += $$QGO_SRC
+INCLUDEPATH += $$QGO_SRC $$QGO_3RD_PARTY_INCLUDE
 
 QMAKE_CXX += -g --coverage
 QMAKE_LFLAGS += --coverage
@@ -43,10 +43,6 @@ HEADERS += \
     ../src/sgfreader.hpp \
     ../src/utils/boosttree.hpp \
     ../src/scorecomputer.hpp \
-    testsgfreader.hpp \
-    testgoban.hpp \
     gobanmakinghelper.hpp \
-    testpoint.hpp \
-    macros.hpp \
-    testboosttree.hpp
+    macros.hpp
 

@@ -170,6 +170,19 @@ private:
     */
     static void parseUS(Game& game, std::string line);
 
+    /**
+    * \brief RE: defines the result of the game
+    *
+    * W+R means white wins by resignation, B+R is black by resignation,
+    * and B+3.5 means black wins by 3.5 points.
+    */
+    static void parseRE(Game& game, std::string line);
+
+    /**
+    * \brief TM: defines the time limit in seconds
+    */
+    static void parseTM(Game& game, std::string line);
+
     //helper functions
 
     static uint8_t parseUInt8(const std::string& line);

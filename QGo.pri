@@ -2,6 +2,8 @@ QGO_ROOT = $$PWD
 
 QGO_INCLUDE = $$QGO_ROOT/include/ 
 
+QGO_3RD_PARTY_INCLUDE = $$QGO_ROOT/3rd_party/
+
 QGO_BIN = $$QGO_ROOT/bin
 
 QGO_OBJ = $$QGO_ROOT/obj
