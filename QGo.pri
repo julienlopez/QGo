@@ -6,6 +6,10 @@ QGO_3RD_PARTY_INCLUDE = $$QGO_ROOT/3rd_party/
 
 QGO_BIN = $$QGO_ROOT/bin
 
+QGO_OBJ_LIB = $$QGO_ROOT/obj_lib
+
+QGO_MOC_LIB = $$QGO_ROOT/moc_lib
+
 QGO_OBJ = $$QGO_ROOT/obj
 
 QGO_MOC = $$QGO_ROOT/moc

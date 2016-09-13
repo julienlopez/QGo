@@ -12,6 +12,10 @@ OBJECTS_DIR = $$QGO_OBJ_TESTS
 MOC_DIR = $$QGO_MOC_TESTS
 
 INCLUDEPATH += $$QGO_SRC $$QGO_3RD_PARTY_INCLUDE
+INCLUDEPATH += ../lib
+
+LIBS += -L$$QGO_BIN
+LIBS += -lQGoLib
 
 QMAKE_CXX += -g --coverage
 QMAKE_LFLAGS += --coverage
@@ -24,11 +28,6 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O0
 
 SOURCES += main.cpp \
-    ../src/point.cpp \
-    ../src/game.cpp \
-    ../src/goban.cpp \
-    ../src/sgfreader.cpp \
-    ../src/scorecomputer.cpp \
     testsgfreader.cpp \
     testgoban.cpp \
     gobanmakinghelper.cpp \
@@ -36,13 +35,6 @@ SOURCES += main.cpp \
     testboosttree.cpp
 
 HEADERS += \
-    ../src/globals.hpp \
-    ../src/point.hpp \
-    ../src/game.hpp \
-    ../src/goban.hpp \
-    ../src/sgfreader.hpp \
-    ../src/utils/boosttree.hpp \
-    ../src/scorecomputer.hpp \
     gobanmakinghelper.hpp \
     macros.hpp
 
