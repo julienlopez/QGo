@@ -85,7 +85,7 @@ void SGFReader::parseLine(Game& game, std::string line)
         if(line.substr(0, pos_bracket) != i->first) continue;
         line.erase(0, i->first.size());
 
-        if(line.size() < 3 || *line.begin() != '[' || *(--line.end()) != ']')
+        if(line.size() < 2 || *line.begin() != '[' || *(--line.end()) != ']')
             throw InvalidLine(line);
         line.erase(0, 1);
         line.pop_back();
