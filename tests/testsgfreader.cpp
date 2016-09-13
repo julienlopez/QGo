@@ -167,6 +167,16 @@ TEST_CASE("TestSGFReader")
         CHECK(ruleset == g.m_ruleSet);
     }
 
+    SECTION("test User Parsing")
+    {
+        std::string user("Me!");
+        QGo::goban_sp goban(new Goban(0));
+        std::list<std::string> lines = {{"SZ[9]"}, {"US[" + user + "]"}};
+        const Game g = SGFReader::parse(lines);
+        g.loadMovesOnto(goban);
+        CHECK(user == g.m_user);
+    }
+
     SECTION("test Application Parsing")
     {
         std::string app("QGo");
