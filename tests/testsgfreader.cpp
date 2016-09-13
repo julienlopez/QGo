@@ -187,6 +187,16 @@ TEST_CASE("TestSGFReader")
         CHECK(result == g.m_result);
     }
 
+    SECTION("test Time limit Parsing")
+    {
+        std::string time_limit("0");
+        QGo::goban_sp goban(new Goban(0));
+        std::list<std::string> lines = {{"SZ[9]"}, {"TM[" + time_limit + "]"}};
+        const Game g = SGFReader::parse(lines);
+        g.loadMovesOnto(goban);
+        CHECK(time_limit == g.m_timeLimit);
+    }
+
     SECTION("test Application Parsing")
     {
         std::string app("QGo");

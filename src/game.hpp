@@ -78,6 +78,7 @@ public:
     std::string m_application;
     std::string m_user;
     std::string m_result;
+    std::string m_timeLimit;
 
 private:
     Player m_black;

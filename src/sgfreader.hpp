@@ -178,6 +178,11 @@ private:
     */
     static void parseRE(Game& game, std::string line);
 
+    /**
+    * \brief TM: defines the time limit in seconds
+    */
+    static void parseTM(Game& game, std::string line);
+
     //helper functions
 
     static uint8_t parseUInt8(const std::string& line);
