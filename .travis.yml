@@ -23,4 +23,4 @@ before_install:
   - pip install --user cpp-coveralls
 
 after_success:
-  - cpp-coveralls --exclude externals --exclude 3rd_party --include src --gcov-options '\-lp' --verbose
+  - cpp-coveralls --exclude externals --exclude 3rd_party --exclude cntk_converter --include src --include lib --gcov-options '\-lp' --verbose

@@ -13,6 +13,7 @@
 *.a
 
 obj/*
+obj_lib/*
 obj_tests/*
 moc/*
 moc_tests/*
