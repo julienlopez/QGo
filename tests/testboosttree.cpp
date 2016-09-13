@@ -1,36 +1,35 @@
-#include "testboosttree.hpp"
+#include "catch.hpp"
 
 #include <utils/boosttree.hpp>
 
-#include <QTest>
-
-TestBoostTree::TestBoostTree(QObject *parent) :
-    QObject(parent)
-{}
-
-void TestBoostTree::testAddOneRoot()
+TEST_CASE("Test Boost Tree")
 {
-    utils::BoostTree<int> tree;
-    QCOMPARE(tree.nbRoots(), (std::size_t)0);
-    tree.addNode(2);
-    QCOMPARE(tree.nbRoots(), (std::size_t)1);
-    utils::BoostTree<int>::vertex_descriptor root = tree.roots().front();
-    QVERIFY(tree.children(root).empty());
-    QCOMPARE(tree(root), 2);
-}
 
-void TestBoostTree::testAddTwoRoots()
-{
-    utils::BoostTree<int> tree;
-    QCOMPARE(tree.nbRoots(), (std::size_t)0);
-    tree.addNode(2);
-    QCOMPARE(tree.nbRoots(), (std::size_t)1);
-    tree.addNode(5);
-    QCOMPARE(tree.nbRoots(), (std::size_t)2);
-    utils::BoostTree<int>::vertex_descriptor root = tree.roots().front();
-    QVERIFY(tree.children(root).empty());
-    QCOMPARE(tree(root), 2);
-    root = tree.roots().back();
-    QVERIFY(tree.children(root).empty());
-    QCOMPARE(tree(root), 5);
+    SECTION("test Add One Root")
+    {
+        utils::BoostTree<int> tree;
+        CHECK(tree.nbRoots() == 0);
+        tree.addNode(2);
+        CHECK(tree.nbRoots() == 1);
+        utils::BoostTree<int>::vertex_descriptor root = tree.roots().front();
+        CHECK(tree.children(root).empty());
+        CHECK(tree(root) == 2);
+    }
+
+    SECTION("test Add Two Roots")
+    {
+        utils::BoostTree<int> tree;
+        CHECK(tree.nbRoots() == 0);
+        tree.addNode(2);
+        CHECK(tree.nbRoots() == 1);
+        tree.addNode(5);
+        CHECK(tree.nbRoots() == 2);
+        utils::BoostTree<int>::vertex_descriptor root = tree.roots().front();
+        CHECK(tree.children(root).empty());
+        CHECK(tree(root) == 2);
+        root = tree.roots().back();
+        CHECK(tree.children(root).empty());
+        CHECK(tree(root) == 5);
+    }
+
 }
