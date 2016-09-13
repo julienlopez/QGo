@@ -10,6 +10,9 @@ INCLUDEPATH += .
 OBJECTS_DIR = $$QGO_OBJ_LIB
 MOC_DIR = $$QGO_MOC_LIB
 
+QMAKE_CXX += -g --coverage
+QMAKE_LFLAGS += --coverage
+
 SOURCES += engine.cpp \
     goban.cpp \
     sgfreader.cpp \
