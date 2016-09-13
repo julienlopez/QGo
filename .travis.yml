@@ -1,0 +1,25 @@
+sudo: required
+dist: trusty
+
+language: cpp
+
+compiler:
+  - gcc
+
+script: 
+  - ./build.sh
+  - ./bin/tests
+
+before_install:
+  - chmod 755 build.sh
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools
+  - sudo apt-get install libboost1.55-dev
+  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.9; fi
+  - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 90; fi
+  - sudo apt-get update
+  - pip install --user cpp-coveralls
+
+after_success:
+  - cpp-coveralls --exclude externals --exclude 3rd_party --include src --gcov-options '\-lp' --verbose
