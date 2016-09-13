@@ -77,6 +77,7 @@ public:
     std::string m_information;
     std::string m_application;
     std::string m_user;
+    std::string m_result;
 
 private:
     Player m_black;

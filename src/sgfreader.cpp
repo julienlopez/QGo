@@ -38,6 +38,7 @@ SGFReader::Dispatch::Dispatch()
     s_map.insert(make_pair("W", &SGFReader::parseW));
     s_map.insert(make_pair("AP", &SGFReader::parseAP));
     s_map.insert(make_pair("US", &SGFReader::parseUS));
+    s_map.insert(make_pair("RE", &SGFReader::parseRE));
 }
 
 const SGFReader::Dispatch::type_map& SGFReader::Dispatch::map() const
@@ -219,6 +220,11 @@ void SGFReader::parseAP(Game& game, std::string line)
 void SGFReader::parseUS(Game& game, std::string line)
 {
     game.m_user = line;
+}
+
+void SGFReader::parseRE(Game& game, std::string line)
+{
+    game.m_result = line;
 }
 
 uint8_t SGFReader::parseUInt8(const std::string& line)
