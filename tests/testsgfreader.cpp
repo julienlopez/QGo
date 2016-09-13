@@ -257,6 +257,20 @@ TEST_CASE("TestSGFReader")
         CHECK(g.m_boardSize == 9);
     }
 
+    SECTION("test two properties on a single line")
+    {
+        QGo::goban_sp goban(new Goban(0));
+        const std::string application = "QGo";
+        const std::string user = "Me";
+        std::list<std::string> lines = {"SZ[9]", "AP[" + application + "]US[" + user + "]"};
+        Game g;
+        EXPECT_NOTHROW((g = SGFReader::parse(lines)));
+        g.loadMovesOnto(goban);
+        CHECK(g.m_boardSize == 9);
+        CHECK(g.m_application == application);
+        CHECK(g.m_user == user);
+    }
+
     SECTION("test Throw On Invalid Line 1")
     {
         QGo::goban_sp goban(new Goban(0));
