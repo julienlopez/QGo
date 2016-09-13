@@ -26,16 +26,8 @@ public:
         QGo::Case m_color;
     };
 
-    class Player
+    struct Player
     {
-    public:
-        const std::string& name() const;
-        const std::string& rank() const;
-
-        void setName(const std::string& n);
-        void setRank(const std::string& r);
-
-    private:
         std::string m_name;
         std::string m_rank;
     };
@@ -45,54 +37,16 @@ public:
     Game();
 
     //getters
-    double komi() const;
-    uint8_t nbHandicapStones() const;
-    const std::string& name() const;
-
     const std::string& blackName() const;
     const std::string& blackRank() const;
     const std::string& whiteName() const;
     const std::string& whiteRank() const;
 
-    const std::string& overtimeSystem() const;
-    const std::string& copyright() const;
-    const std::string& eventName() const;
-
-    uint8_t boardSize() const;
-
-    const std::string& ruleSet() const;
-    const std::string& gamePlace() const;
-
-    const std::string& date() const;
-    const std::string& information() const;
-
-    const std::string& application() const;
-    const std::string& user() const;
-
     //setters
-    void setKomi(double k);
-    void setNbHandicapStones(uint8_t n);
-    void setName(const std::string& name);
-
     void setBlackName(const std::string& bn);
     void setBlackRank(const std::string& br);
     void setWhiteName(const std::string& wn);
     void setWhiteRank(const std::string& wr);
-
-    void setOvertimeSystem(const std::string& ots);
-    void setCopyright(const std::string& cr);
-    void setEventName(const std::string& en);
-
-    void setBoardSize(uint8_t size);
-
-    void setRuleSet(const std::string& rs);
-    void setGamePlace(const std::string& gp);
-
-    void setDate(const std::string& date);
-    void setInformation(const std::string& information);
-
-    void setApplication(const std::string& application);
-    void setUser(const std::string& user);
 
     //moves related methods:
     void addMove(const Point& position, QGo::Case color);
@@ -110,12 +64,9 @@ public:
 
     const type_tree& tree() const;
 
-private:
     double m_komi;
     uint8_t m_nbHandicapStones;
     std::string m_name;
-    Player m_black;
-    Player m_white;
     std::string m_overtimeSystem;
     std::string m_copyright;
     std::string m_eventName;
@@ -126,6 +77,10 @@ private:
     std::string m_information;
     std::string m_application;
     std::string m_user;
+
+private:
+    Player m_black;
+    Player m_white;
 
     type_tree m_gameTree;
     type_tree::vertex_descriptor m_currentNodeInGameTree;

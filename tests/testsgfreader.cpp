@@ -35,16 +35,16 @@ void TestSGFReader::testKomiParsing()
 {
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"KM[5.5]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(5.5, g.komi());
+    QCOMPARE(5.5, g.m_komi);
 }
 
 void TestSGFReader::testBlackRankParsing()
 {
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"BR[15k]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
     QCOMPARE(std::string("15k"), g.blackRank());
 }
@@ -53,7 +53,7 @@ void TestSGFReader::testWhiteRankParsing()
 {
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"WR[9k]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
     QCOMPARE(std::string("9k"), g.whiteRank());
 }
@@ -63,9 +63,9 @@ void TestSGFReader::testPlaceParsing()
     std::string place = "Paris";
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"PC["+place+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(place, g.gamePlace());
+    QCOMPARE(place, g.m_gamePlace);
 }
 
 void TestSGFReader::testGameNameParsing()
@@ -73,9 +73,9 @@ void TestSGFReader::testGameNameParsing()
     std::string name = "Super Meijin";
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"GN["+name+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(name, g.name());
+    QCOMPARE(name, g.m_name);
 }
 
 void TestSGFReader::testNumberOfHandicapStonesParsing()
@@ -83,9 +83,9 @@ void TestSGFReader::testNumberOfHandicapStonesParsing()
     uint8_t nbStones = 2;
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"HA["+std::to_string(nbStones)+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(nbStones, g.nbHandicapStones());
+    QCOMPARE(nbStones, g.m_nbHandicapStones);
 }
 
 void TestSGFReader::testBlackNameParsing()
@@ -93,7 +93,7 @@ void TestSGFReader::testBlackNameParsing()
     std::string name("Blackey");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"PB["+name+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
     QCOMPARE(name, g.blackName());
 }
@@ -103,7 +103,7 @@ void TestSGFReader::testWhiteNameParsing()
     std::string name("Whitey");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"PW["+name+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
     QCOMPARE(name, g.whiteName());
 }
@@ -113,9 +113,9 @@ void TestSGFReader::testOvertimeSystemParsing()
     std::string overtime("byo-yomi 5min 15stones");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"OT["+overtime+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(overtime, g.overtimeSystem());
+    QCOMPARE(overtime, g.m_overtimeSystem);
 }
 
 void TestSGFReader::testCopyrightParsing()
@@ -123,9 +123,9 @@ void TestSGFReader::testCopyrightParsing()
     std::string copyright("free");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"CP["+copyright+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(copyright, g.copyright());
+    QCOMPARE(copyright, g.m_copyright);
 }
 
 void TestSGFReader::testEventNameParsing()
@@ -133,9 +133,9 @@ void TestSGFReader::testEventNameParsing()
     std::string name("Super Meijin Paris");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"EV["+name+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(name, g.eventName());
+    QCOMPARE(name, g.m_eventName);
 }
 
 void TestSGFReader::testDateParsing()
@@ -143,18 +143,18 @@ void TestSGFReader::testDateParsing()
     std::string date("Super Meijin Paris");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"DT["+date+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(date, g.date());
+    QCOMPARE(date, g.m_date);
 }
 void TestSGFReader::testInformationParsing()
 {
     std::string info("Some infos on the game");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"GC["+info+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(info, g.information());
+    QCOMPARE(info, g.m_information);
 }
 
 void TestSGFReader::testRuleSetParsing()
@@ -162,9 +162,9 @@ void TestSGFReader::testRuleSetParsing()
     std::string ruleset("Japanese");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"RU["+ruleset+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(ruleset, g.ruleSet());
+    QCOMPARE(ruleset, g.m_ruleSet);
 }
 
 void TestSGFReader::testApplicationParsing()
@@ -172,9 +172,9 @@ void TestSGFReader::testApplicationParsing()
     std::string app("QGo");
     QGo::goban_sp goban(new Goban(0));
     std::list<std::string> lines = {{"SZ[9]"}, {"AP["+app+"]"}};
-    Game g = SGFReader::parse(lines);
+    const Game g = SGFReader::parse(lines);
     g.loadMovesOnto(goban);
-    QCOMPARE(app, g.application());
+    QCOMPARE(app, g.m_application);
 }
 
 void TestSGFReader::testFullReport()
@@ -224,7 +224,7 @@ void TestSGFReader::testSkipEmptyLine()
     Game g;
     EXPECT_NOTHROW((g = SGFReader::parse(lines)));
     g.loadMovesOnto(goban);
-    QCOMPARE((uint8_t)9, g.boardSize());
+    QCOMPARE((uint8_t)9, g.m_boardSize);
 }
 
 void TestSGFReader::testThrowOnInvalidLine1()
