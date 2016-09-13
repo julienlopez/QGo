@@ -67,6 +67,7 @@ public:
     const std::string& information() const;
 
     const std::string& application() const;
+    const std::string& user() const;
 
     //setters
     void setKomi(double k);
@@ -91,6 +92,7 @@ public:
     void setInformation(const std::string& information);
 
     void setApplication(const std::string& application);
+    void setUser(const std::string& user);
 
     //moves related methods:
     void addMove(const Point& position, QGo::Case color);
@@ -123,6 +125,7 @@ private:
     std::string m_date;
     std::string m_information;
     std::string m_application;
+    std::string m_user;
 
     type_tree m_gameTree;
     type_tree::vertex_descriptor m_currentNodeInGameTree;

@@ -122,6 +122,11 @@ const std::string& Game::application() const
     return m_application;
 }
 
+const std::string& Game::user() const
+{
+    return m_user;
+}
+
 void Game::setKomi(double k)
 {
     m_komi = k;
@@ -200,6 +205,11 @@ void Game::setInformation(const std::string& info)
 void Game::setApplication(const std::string& app)
 {
     m_application = app;
+}
+
+void Game::setUser(const std::string& user)
+{
+    m_user = user;
 }
 
 void Game::addMove(const Point& position, QGo::Case color)

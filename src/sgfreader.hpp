@@ -165,6 +165,11 @@ private:
     */
     static void parseAP(Game& game, std::string line);
 
+    /**
+    * \brief US: defines the name of the person who created the SGF file
+    */
+    static void parseUS(Game& game, std::string line);
+
     //helper functions
 
     static uint8_t parseUInt8(const std::string& line);
