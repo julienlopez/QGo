@@ -1,6 +1,7 @@
 #include "sgfreader.hpp"
 #include "game.hpp"
 
+#include <fstream>
 #include <iostream>
 #include <sstream>
 
