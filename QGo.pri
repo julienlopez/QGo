@@ -30,5 +30,7 @@ QGO_SRC = $$QGO_ROOT/src
 
 DESTDIR = $$QGO_BIN
 
+include(boost.pri)
+
 QMAKE_CXXFLAGS += -std=c++11
 # -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline -Wno-long-long -Wuninitialized -Wconversion

@@ -21,7 +21,6 @@ before_install:
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 90; fi
   - sudo apt-get update
   - pip install --user cpp-coveralls
-  - ls -lh /usr/local/lib/
   - find /usr -name libboost*
 
 after_success:

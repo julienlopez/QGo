@@ -16,7 +16,7 @@ INCLUDEPATH += ../lib
 
 LIBS += -L$$QGO_BIN
 LIBS += -lQGoLib
-LIBS += -lboost_system-mt -lboost_filesystem-mt
+LIBS += -lboost_system$$BOOST_SUFFIX -lboost_filesystem$$BOOST_SUFFIX
 
 QMAKE_CXX += -g --coverage
 QMAKE_LFLAGS += --coverage
