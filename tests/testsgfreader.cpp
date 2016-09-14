@@ -34,7 +34,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Komi Parsing")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"KM[5.5]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"KM[5.5]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(5.5 == g.m_komi);
@@ -43,7 +43,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Black Rank Parsing")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"BR[15k]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"BR[15k]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK("15k" == g.blackRank());
@@ -52,7 +52,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test White Rank Parsing")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"WR[9k]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"WR[9k]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK("9k" == g.whiteRank());
@@ -62,7 +62,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string place = "Paris";
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"PC["+place+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"PC["+place+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(place == g.m_gamePlace);
@@ -72,7 +72,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string name = "Super Meijin";
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"GN["+name+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"GN["+name+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(name == g.m_name);
@@ -82,7 +82,7 @@ TEST_CASE("TestSGFReader")
     {
         uint8_t nbStones = 2;
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"HA["+std::to_string(nbStones)+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"HA["+std::to_string(nbStones)+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(nbStones == g.m_nbHandicapStones);
@@ -92,7 +92,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string name("Blackey");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"PB["+name+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"PB["+name+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(name == g.blackName());
@@ -102,7 +102,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string name("Whitey");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"PW["+name+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"PW["+name+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(name == g.whiteName());
@@ -112,7 +112,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string overtime("byo-yomi 5min 15stones");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"OT["+overtime+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"OT["+overtime+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(overtime == g.m_overtimeSystem);
@@ -122,7 +122,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string copyright("free");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"CP["+copyright+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"CP["+copyright+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(copyright == g.m_copyright);
@@ -132,7 +132,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string name("Super Meijin Paris");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"EV["+name+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"EV["+name+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(name == g.m_eventName);
@@ -142,7 +142,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string date("Super Meijin Paris");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"DT["+date+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"DT["+date+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(date == g.m_date);
@@ -151,7 +151,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string info("Some infos on the game");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"GC["+info+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"GC["+info+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(info == g.m_information);
@@ -161,7 +161,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string ruleset("Japanese");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"RU["+ruleset+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"RU["+ruleset+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(ruleset == g.m_ruleSet);
@@ -171,7 +171,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string user("Me!");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"US[" + user + "]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"US[" + user + "]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(user == g.m_user);
@@ -181,7 +181,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string result("W+R");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"RE[" + result + "]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"RE[" + result + "]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(result == g.m_result);
@@ -191,7 +191,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string time_limit("0");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"TM[" + time_limit + "]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"TM[" + time_limit + "]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(time_limit == g.m_timeLimit);
@@ -201,7 +201,7 @@ TEST_CASE("TestSGFReader")
     {
         std::string app("QGo");
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"AP["+app+"]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"AP["+app+"]"}};
         const Game g = SGFReader::parse(lines);
         g.loadMovesOnto(goban);
         CHECK(app == g.m_application);
@@ -225,7 +225,7 @@ TEST_CASE("TestSGFReader")
         std::string ruleSet = "Japanese";
         std::string gamePlace = "Paris";
 
-        std::list<std::string> lines = {{"GN["+name+"]"}, {"KM["+komi+"]"}, {"HA["+nbHandicapStones+"]"}, {"PB["+blackName+"]"}, {"BR["+blackRank+"]"},
+        std::vector<std::string> lines = {{"GN["+name+"]"}, {"KM["+komi+"]"}, {"HA["+nbHandicapStones+"]"}, {"PB["+blackName+"]"}, {"BR["+blackRank+"]"},
                                         {"PW["+whiteName+"]"}, {"WR["+whiteRank+"]"}, {"OT["+overtimeSystem+"]"}, {"CP["+copyright+"]"}, {"EV["+eventName+"]"},
                                         {"SZ["+boardSize+"]"}, {"RU["+ruleSet+"]"}, {"PC["+gamePlace+"]"}};
         Game g;
@@ -250,7 +250,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Skip Empty Line")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {""}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {""}};
         Game g;
         EXPECT_NOTHROW((g = SGFReader::parse(lines)));
         g.loadMovesOnto(goban);
@@ -262,7 +262,7 @@ TEST_CASE("TestSGFReader")
         QGo::goban_sp goban(new Goban(0));
         const std::string application = "QGo";
         const std::string user = "Me";
-        std::list<std::string> lines = {"SZ[9]", "AP[" + application + "]US[" + user + "]"};
+        std::vector<std::string> lines = {"SZ[9]", "AP[" + application + "]US[" + user + "]"};
         Game g;
         EXPECT_NOTHROW((g = SGFReader::parse(lines)));
         g.loadMovesOnto(goban);
@@ -274,7 +274,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Throw On Invalid Line 1")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"B5]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"B5]"}};
         Game g;
         EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::InvalidLine);
     }
@@ -282,7 +282,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Throw On Invalid Line 2")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"B[5"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"B[5"}};
         Game g;
         EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::InvalidLine);
     }
@@ -290,7 +290,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Throw On Invalid Reckognized Line")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"PP[11]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"PP[11]"}};
         Game g;
         EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::UnreckognizedCommand);
     }
@@ -298,7 +298,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Throw On Unsupported Sgf Format")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"FF[3]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"FF[3]"}};
         Game g;
         EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::InvalidLine);
     }
@@ -306,7 +306,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test No Throw On Supported Sgf Format")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"FF[4]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"FF[4]"}};
         Game g;
         EXPECT_NOTHROW(g = SGFReader::parse(lines));
     }
@@ -314,7 +314,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Throw On Not A Game Of Go")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"GM[3]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"GM[3]"}};
         Game g;
         EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::InvalidLine);
     }
@@ -322,21 +322,21 @@ TEST_CASE("TestSGFReader")
     SECTION("test No Throw On Game Of Go")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {"GM[1]"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {"GM[1]"}};
         Game g;
         EXPECT_NOTHROW(g = SGFReader::parse(lines));
     }
 
     SECTION("test Parse High Position")
     {
-        std::list<std::string> lines = {{"SZ[32]"}, {";B[Bc]"}};
+        std::vector<std::string> lines = {{"SZ[32]"}, {";B[Bc]"}};
         Game g;
         EXPECT_NOTHROW((g = SGFReader::parse(lines)));
     }
 
     SECTION("test Invalid Position")
     {
-        std::list<std::string> lines = {{"SZ[32]"}, {";B[12]"}};
+        std::vector<std::string> lines = {{"SZ[32]"}, {";B[12]"}};
         Game g;
         EXPECT_THROW((g = SGFReader::parse(lines)), SGFReader::InvalidLine);
     }
@@ -344,7 +344,7 @@ TEST_CASE("TestSGFReader")
     SECTION("test Parse Alternative Move 1")
     {
         QGo::goban_sp goban(new Goban(0));
-        std::list<std::string> lines = {{"SZ[9]"}, {";B[aa]"}, {"("}, {";W[bb]"}, {")"}, {"("}, {";W[bc]"}, {")"}};
+        std::vector<std::string> lines = {{"SZ[9]"}, {";B[aa]"}, {"("}, {";W[bb]"}, {")"}, {"("}, {";W[bc]"}, {")"}};
         Game g;
         EXPECT_NOTHROW((g = SGFReader::parse(lines)));
         const Game::type_tree& tree = g.tree();

@@ -7,7 +7,7 @@
 
 void GobanMakingHelper::buildGoban(QGo::goban_sp goban, uint8_t size, const QGo::type_list_point& blackMoves, const QGo::type_list_point& whiteMoves)
 {
-    std::list<std::string> lines = {{"SZ[" + std::to_string(size) + "]"}};
+    std::vector<std::string> lines = {{"SZ[" + std::to_string(size) + "]"}};
     for(const Point& p : blackMoves)
         lines.push_back(makeMove('b', p.x(), p.y()));
     for(const Point& p : whiteMoves)

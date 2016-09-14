@@ -10,6 +10,7 @@ INCLUDEPATH += ../lib
 
 LIBS += -L$$QGO_BIN
 LIBS += -lQGoLib
+LIBS += -lboost_system-mt -lboost_filesystem-mt
 
 OBJECTS_DIR = $$QGO_OBJ
 MOC_DIR = $$QGO_MOC

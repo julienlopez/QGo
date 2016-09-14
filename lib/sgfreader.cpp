@@ -1,7 +1,10 @@
 #include "sgfreader.hpp"
 #include "game.hpp"
 
+#include <iostream>
 #include <sstream>
+
+#include <boost/filesystem.hpp>
 
 #include <QDebug>
 
@@ -53,14 +56,55 @@ SGFReader::InvalidLine::InvalidLine(const std::string& line): std::invalid_argum
 SGFReader::UnreckognizedCommand::UnreckognizedCommand(const std::string& line): std::invalid_argument("Unreckognized command: "+line)
 {}
 
-Game SGFReader::parse(const std::list<std::string>& lst)
+Game SGFReader::parse(const std::vector<std::string>& lst)
 {
     Game res;
-    std::for_each(lst.begin(), lst.end(), [&](const std::string& line)
-        {
-            SGFReader::parseLine(res, line);
-        });
+    for(const auto& line : lst)
+    {
+        SGFReader::parseLine(res, line);
+    }
     return res;
+}
+
+std::vector<std::string> SGFReader::parseFileIntoLines(const boost::filesystem::path& file_path)
+{
+    assert(boost::filesystem::is_regular(file_path));
+    std::ifstream file(file_path.string());
+    assert(file);
+    std::string line;
+    std::vector<std::string> lines;
+    while(std::getline(file, line))
+    {
+        lines.push_back(std::move(line));
+    }
+
+    //preliminary checks on overall file structure
+    while(!lines.empty() && lines.back().empty()) lines.pop_back();
+    if(lines.empty())
+    {
+        std::cerr << "no line to read" << std::endl;
+        return {};
+    }
+
+    if(lines.front().empty() || *lines.front().begin() != '(')
+    {
+        std::cerr << "no parenthesis to open the file" << std::endl;
+        return {};
+    }
+    lines.front().erase(0,1);
+
+    if(lines.back().empty() || *(--lines.back().end()) != ')')
+    {
+        std::cerr << "no parenthesis to close the file" << std::endl;
+        return {};
+    }
+    lines.back().pop_back();
+    while(!lines.empty() && lines.back().empty()) lines.pop_back();
+
+    if(!lines.front().empty() && *lines.front().begin() == ';') {
+        lines.front().erase(0, 1);
+    }
+    return lines;
 }
 
 void SGFReader::parseLine(Game& game, std::string line)

@@ -7,6 +7,8 @@
 #include <functional>
 #include <stdexcept>
 
+#include <boost/filesystem/path.hpp>
+
 class Game;
 class Point;
 
@@ -19,7 +21,9 @@ public:
     *
     * each line can consist of several instructions;
     */
-    static Game parse(const std::list<std::string>& lst);
+    static Game parse(const std::vector<std::string>& lst);
+
+    static std::vector<std::string> parseFileIntoLines(const boost::filesystem::path& file_path);
 
     struct InvalidLine : public std::invalid_argument
     {

@@ -101,45 +101,7 @@ void MainWindow::onActionOpenFile()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select a game to open"), QString(),"*.sgf");
     if(fileName.isEmpty()) return;
     if(!QFile::exists(fileName)) return;
-
-    QFile file(fileName);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QTextStream flux(&file);
-    QString line;
-    std::list<std::string> lines;
-    while(!flux.atEnd())
-    {
-        line = flux.readLine();
-        lines.push_back(line.toStdString());
-    }
-
-    //preliminary checks on overall file structure
-    while(!lines.empty() && lines.back().empty()) lines.pop_back();
-    if(lines.empty())
-    {
-        qDebug() << "no line to read";
-        return;
-    }
-
-    if(lines.front().empty() || *lines.front().begin() != '(')
-    {
-        qDebug() << "no parenthesis to open the file";
-        return;
-    }
-    lines.front().erase(0,1);
-
-    if(lines.back().empty() || *(--lines.back().end()) != ')')
-    {
-        qDebug() << "no parenthesis to close the file";
-        return;
-    }
-    lines.back().pop_back();
-    while(!lines.empty() && lines.back().empty()) lines.pop_back();
-
-    if(!lines.front().empty() && *lines.front().begin() == ';') {
-        lines.front().erase(0, 1);
-    }
-
+    const auto lines = SGFReader::parseFileIntoLines(fileName.toStdWString());
     try {
         Game g = SGFReader::parse(lines);
         qDebug() << QString::fromStdString(g.report());

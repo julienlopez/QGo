@@ -13,6 +13,8 @@ MOC_DIR = $$QGO_MOC_LIB
 QMAKE_CXX += -g --coverage
 QMAKE_LFLAGS += --coverage
 
+LIBS += -lboost_system-mt -lboost_filesystem-mt
+
 SOURCES += engine.cpp \
     goban.cpp \
     sgfreader.cpp \
