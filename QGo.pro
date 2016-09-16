@@ -1,3 +1,3 @@
 TEMPLATE  = subdirs
 CONFIG   += ordered
-SUBDIRS = lib src tests
+SUBDIRS = lib src tests cntk_converter

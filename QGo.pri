@@ -18,6 +18,10 @@ QGO_OBJ_TESTS = $$QGO_ROOT/obj_tests
 
 QGO_MOC_TESTS = $$QGO_ROOT/moc_tests
 
+QGO_OBJ_CNTK_CONVERTER = $$QGO_ROOT/obj_cntk_converter
+
+QGO_MOC_CNTK_CONVERTER = $$QGO_ROOT/moc_cntk_converter
+
 QGO_SRC = $$QGO_ROOT/src
 
 #QGO_INSTALL_PLUGINS = $$QGO_BIN/plugins

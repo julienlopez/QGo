@@ -19,5 +19,6 @@ moc/*
 moc_tests/*
 bin/QGo*
 bin/tests*
+bin/cntk_converter.exe
 *.pro.user
 QGo.pri
