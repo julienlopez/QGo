@@ -18,4 +18,8 @@ LIBS += -L$$QGO_BIN
 LIBS += -lQGoLib
 LIBS += -lboost_system$$BOOST_SUFFIX -lboost_filesystem$$BOOST_SUFFIX
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    cntkwriter.cpp
+
+HEADERS += \
+    cntkwriter.hpp

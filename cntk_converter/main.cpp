@@ -1,7 +1,10 @@
+#include "cntkwriter.hpp"
+
 #include "game.hpp"
 #include "goban.hpp"
 #include "sgfreader.hpp"
 
+#include <fstream>
 #include <iostream>
 
 #include <QCoreApplication>
@@ -13,6 +16,8 @@
 std::size_t total_nb_of_files = 0;
 std::size_t nb_of_games_with_variations = 0;
 std::size_t total_nb_of_games = 0;
+
+CntkWriter writer("out.txt");
 
 std::ostream& operator<<(std::ostream& o, const QString& str)
 {
@@ -102,9 +107,9 @@ int8_t encodeColor(QGo::Case color, QGo::Case color_to_play)
     return color == color_to_play ? 1 : -1;
 }
 
-std::vector<int8_t> encode(const Goban& goban, QGo::Case color_to_play)
+CntkWriter::GobanVector_t encode(const Goban& goban, QGo::Case color_to_play)
 {
-    std::vector<int8_t> res(goban.size() * goban.size(), 0);
+    CntkWriter::GobanVector_t res(goban.size() * goban.size(), 0);
     for(uint8_t y = 0; y < goban.size(); y++)
     {
         for(uint8_t x = 0; x < goban.size(); x++)
@@ -136,17 +141,18 @@ void parseFile(const QFileInfo& path)
         Goban goban(game.boardSize());
         for(const auto& move : moves)
         {
-            display(goban);
-            std::cout << "next move is " << printStone(move.color()) << " on {" << (uint)move.position().x() << ", " << (uint)move.position().y() << "}\n";
+            //display(goban);
+            //std::cout << "next move is " << printStone(move.color()) << " on {" << (uint)move.position().x() << ", " << (uint)move.position().y() << "}\n";
             const auto encoded_goban = encode(goban, move.color());
-            std::copy(begin(encoded_goban), end(encoded_goban), std::ostream_iterator<int>(std::cout, ",")); std::cout << std::endl;
+            //std::copy(begin(encoded_goban), end(encoded_goban), std::ostream_iterator<int>(std::cout, ",")); std::cout << std::endl;
             Goban next_move(game.boardSize());
             next_move.placeStone(move.position().x(), move.position().y(), move.color());
             const auto encoded_next_move = encode(next_move, move.color());
-            std::copy(begin(encoded_next_move), end(encoded_next_move), std::ostream_iterator<int>(std::cout, ",")); std::cout << std::endl;
-            display(next_move);
+            //std::copy(begin(encoded_next_move), end(encoded_next_move), std::ostream_iterator<int>(std::cout, ",")); std::cout << std::endl;
+            //display(next_move);
+            //std::cout << std::endl;
             goban.placeStone(move.position().x(), move.position().y(), move.color());
-            std::cout << std::endl;
+            writer.addLine(encoded_goban, encoded_next_move);
         }
     }
     catch(...)
