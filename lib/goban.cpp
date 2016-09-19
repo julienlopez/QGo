@@ -59,7 +59,7 @@ Goban::type_set_point Goban::computeLiberties(uint8_t x, uint8_t y) const
 
 std::size_t Goban::nbStonesPlaced() const
 {
-    return m_array.size();
+    return std::count_if(begin(m_array), end(m_array), [](QGo::Case c) { return c != QGo::EMPTY; });
 }
 
 void Goban::clear()

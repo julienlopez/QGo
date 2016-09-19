@@ -79,4 +79,13 @@ TEST_CASE("TestGoban")
         CHECK(QGo::Case::BLACK == (*goban)(2, 1));
     }
 
+    SECTION("test number of stones places")
+    {
+        QGo::goban_sp goban(new Goban(0));
+        QGo::type_list_point blackMoves = {{Point(1,0), Point(0,1), Point(1,2)}};
+        QGo::type_list_point whiteMoves = {{Point(1,1)}};
+        GobanMakingHelper::buildGoban(goban, 9, blackMoves, whiteMoves);
+        CHECK(goban->nbStonesPlaced() == blackMoves.size() + whiteMoves.size());
+    }
+
 }
