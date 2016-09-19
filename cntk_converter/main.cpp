@@ -17,7 +17,7 @@ std::size_t total_nb_of_files = 0;
 std::size_t nb_of_games_with_variations = 0;
 std::size_t total_nb_of_games = 0;
 
-CntkWriter writer("out.txt");
+CntkWriter writer("train.txt", "test.txt", 0.2);
 
 std::ostream& operator<<(std::ostream& o, const QString& str)
 {
