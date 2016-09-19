@@ -21,8 +21,6 @@ before_install:
   - if [ "$CXX" = "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 90; fi
   - sudo apt-get update
   - pip install --user cpp-coveralls
-  - g++ -v
-  - 
 
 after_success:
   - cpp-coveralls --exclude externals --exclude 3rd_party --exclude cntk_converter --include src --include lib --gcov-options '\-lp' --verbose

@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     qDebug() << total_nb_of_files << " files read";
     qDebug() << total_nb_of_games << " games parsed";
     qDebug() << nb_of_games_with_variations << " games with variations found";
-    QTimer::singleShot(100, &app, &QCoreApplication::quit);
+    QTimer::singleShot(100, &app, SLOT(quit()));
 	return app.exec();
 }
 
