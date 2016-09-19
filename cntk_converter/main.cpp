@@ -10,11 +10,20 @@
 #include <QFileInfo>
 #include <QTimer>
 
-#include <QDebug>
-
 std::size_t total_nb_of_files = 0;
 std::size_t nb_of_games_with_variations = 0;
 std::size_t total_nb_of_games = 0;
+
+std::ostream& operator<<(std::ostream& o, const QString& str)
+{
+    o << str.toStdString();
+    return o;
+}
+
+QGo::Case colorToPlay(const Goban& g)
+{
+    return g.nbStonesPlaced()?QGo::WHITE:QGo::BLACK;
+}
 
 void parse(const QFileInfo& path, const bool recursive);
 
@@ -31,12 +40,12 @@ int main(int argc, char* argv[])
 
     for(const auto& file_name : arguments)
     {
-        qDebug() << file_name;
+        std::cout << file_name << std::endl;
         parse(file_name, is_recursive);
     }
-    qDebug() << total_nb_of_files << " files read";
-    qDebug() << total_nb_of_games << " games parsed";
-    qDebug() << nb_of_games_with_variations << " games with variations found";
+    std::cout << total_nb_of_files << " files read" << std::endl;
+    std::cout << total_nb_of_games << " games parsed" << std::endl;
+    std::cout << nb_of_games_with_variations << " games with variations found" << std::endl;
     QTimer::singleShot(100, &app, SLOT(quit()));
 	return app.exec();
 }
@@ -67,29 +76,49 @@ std::string printStone(QGo::Case c)
     return "";
 }
 
-void display(const std::shared_ptr<Goban>& goban)
+void display(const Goban& goban)
 {
-    for(uint8_t x = 0; x < goban->size() + 2; x++)
+    std::cout << goban.nbStonesPlaced() << " moves : " << printStone(colorToPlay(goban)) << " to play" << std::endl;
+    for(uint8_t x = 0; x < goban.size() + 2; x++)
         std::cout << "=";
     std::cout << "\n";
-    for(uint8_t y = 0; y < goban->size(); y++)
+    for(uint8_t y = 0; y < goban.size(); y++)
     {
         std::cout << "|";
-        for(uint8_t x = 0; x < goban->size(); x++)
+        for(uint8_t x = 0; x < goban.size(); x++)
         {
-            std::cout << printStone((*goban)(x, y));
+            std::cout << printStone(goban(x, y));
         }
         std::cout << "|\n";
     }
-    for(uint8_t x = 0; x < goban->size() + 2; x++)
+    for(uint8_t x = 0; x < goban.size() + 2; x++)
         std::cout << "=";
     std::cout << std::endl;
+}
+
+int8_t encodeColor(QGo::Case color, QGo::Case color_to_play)
+{
+    if(color == QGo::EMPTY) return 0;
+    return color == color_to_play ? 1 : -1;
+}
+
+std::vector<int8_t> encode(const Goban& goban, QGo::Case color_to_play)
+{
+    std::vector<int8_t> res(goban.size() * goban.size(), 0);
+    for(uint8_t y = 0; y < goban.size(); y++)
+    {
+        for(uint8_t x = 0; x < goban.size(); x++)
+        {
+            res[x + y * goban.size()] = encodeColor(goban(x, y), color_to_play);
+        }
+    }
+    return res;
 }
 
 void parseFile(const QFileInfo& path)
 {
     Q_ASSERT(path.isFile() && path.isReadable());
-    qDebug() << "parsing " << path.filePath();
+    std::cout << "parsing " << path.filePath() << std::endl;
     total_nb_of_files++;
     try
     {
@@ -97,16 +126,32 @@ void parseFile(const QFileInfo& path)
         total_nb_of_games++;
         if(game.hasAlternativeMoves())
         {
-            qDebug() << "Unable to parse games with variations";
+            std::cout << "Unable to parse games with variations" << std::endl;
             nb_of_games_with_variations++;
         }
-        auto goban = std::make_shared<Goban>(19);
-        game.loadMovesOnto(goban);
-        display(goban);
+        //auto goban = std::make_shared<Goban>(19);
+        //game.loadMovesOnto(goban);
+        //display(goban);
+        const auto moves = game.generateAllMoves();
+        Goban goban(game.boardSize());
+        for(const auto& move : moves)
+        {
+            display(goban);
+            std::cout << "next move is " << printStone(move.color()) << " on {" << (uint)move.position().x() << ", " << (uint)move.position().y() << "}\n";
+            const auto encoded_goban = encode(goban, move.color());
+            std::copy(begin(encoded_goban), end(encoded_goban), std::ostream_iterator<int>(std::cout, ",")); std::cout << std::endl;
+            Goban next_move(game.boardSize());
+            next_move.placeStone(move.position().x(), move.position().y(), move.color());
+            const auto encoded_next_move = encode(next_move, move.color());
+            std::copy(begin(encoded_next_move), end(encoded_next_move), std::ostream_iterator<int>(std::cout, ",")); std::cout << std::endl;
+            display(next_move);
+            goban.placeStone(move.position().x(), move.position().y(), move.color());
+            std::cout << std::endl;
+        }
     }
     catch(...)
     {
-        qDebug() << "Unable to parse " << path.filePath();
+        std::cout << "Unable to parse " << path.filePath() << std::endl;
     }
 }
 

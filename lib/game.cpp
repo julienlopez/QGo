@@ -23,6 +23,11 @@ QGo::Case Game::Move::color() const
 Game::Game()
 {}
 
+uint8_t Game::boardSize() const
+{
+    return m_boardSize;
+}
+
 const std::string& Game::blackName() const
 {
     return m_black.m_name;
@@ -114,6 +119,20 @@ void Game::loadMovesOnto(QGo::goban_wp g) const
         goban->placeStone(m.position().x(), m.position().y(), m.color());
         children = m_gameTree.children(children.front());
     }
+}
+
+auto Game::generateAllMoves() const -> std::vector<Move>
+{
+    assert(!hasAlternativeMoves()); //alternative moves not handled for now
+    std::vector<Move> res;
+    type_tree::list_vertex_descriptor children = m_gameTree.roots();
+    while(!children.empty())
+    {
+        assert(children.size() == 1);
+        res.push_back(m_gameTree(children.front()));
+        children = m_gameTree.children(children.front());
+    }
+    return res;
 }
 
 bool Game::hasAlternativeMoves() const

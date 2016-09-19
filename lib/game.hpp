@@ -37,6 +37,7 @@ public:
     Game();
 
     //getters
+    uint8_t boardSize() const;
     const std::string& blackName() const;
     const std::string& blackRank() const;
     const std::string& whiteName() const;
@@ -54,7 +55,15 @@ public:
     //utility methods
     std::string report() const;
 
+    /**
+    * @pre !hasAlternativeMoves()
+    */
     void loadMovesOnto(QGo::goban_wp goban) const;
+
+    /**
+    * @pre !hasAlternativeMoves()
+    */
+    std::vector<Move> generateAllMoves() const;
 
     bool hasAlternativeMoves() const;
 
