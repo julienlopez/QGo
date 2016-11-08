@@ -24,7 +24,7 @@ void Engine::setSize(uint8_t s)
     m_size = s;
 }
 
-Engine::Engine(): m_size(9)
+Engine::Engine(): m_size(19)
 {
     init();
 }
