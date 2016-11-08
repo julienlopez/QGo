@@ -294,13 +294,13 @@ double SGFReader::parseDouble(const std::string& line)
     return d;
 }
 
-Point SGFReader::parsePoint(const std::string& line) throw(InvalidLine)
+Point SGFReader::parsePoint(const std::string& line)
 {
     if(line.size() != 2) throw InvalidLine(line + " isn't a valid position for a move");
     return Point(parsePosition(line.front()), parsePosition(line.back()));
 }
 
-uint8_t SGFReader::parsePosition(char c) throw(InvalidLine)
+uint8_t SGFReader::parsePosition(char c)
 {
     if(c >= 'a' && c < 'z')
     {

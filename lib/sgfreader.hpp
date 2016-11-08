@@ -193,9 +193,15 @@ private:
 
     static double parseDouble(const std::string& line);
 
-    static Point parsePoint(const std::string& line) throw(InvalidLine);
+    /**
+     * @throws InvalidLine
+     */
+    static Point parsePoint(const std::string& line);
 
-    static uint8_t parsePosition(char c) throw(InvalidLine);
+    /**
+     * @throws InvalidLine
+     */
+    static uint8_t parsePosition(char c);
 
     const static Dispatch s_dispatch;
 };
