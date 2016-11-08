@@ -23,6 +23,7 @@ void Goban::placeStone(uint8_t x, uint8_t y, QGo::Case color)
     get(x, y) = color;
     checkForCapture(x, y);
     checkForSuicide(x, y);
+    m_last_stone_played = color;
 }
 
 const QGo::Case& Goban::operator()(uint8_t x, uint8_t y) const throw(std::invalid_argument)
@@ -65,6 +66,11 @@ std::size_t Goban::nbStonesPlaced() const
 void Goban::clear()
 {
     std::fill(m_array.begin(), m_array.end(), QGo::EMPTY);
+}
+
+QGo::Case Goban::lastStonePlayed() const
+{
+    return m_last_stone_played;
 }
 
 QGo::Case& Goban::get(uint8_t x, uint8_t y) throw(std::invalid_argument)

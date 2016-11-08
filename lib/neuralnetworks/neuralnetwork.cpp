@@ -10,6 +10,8 @@
 #include <windows.h>
 #endif
 
+#include <iostream>
+
 namespace NeuralNetworks
 {
 
@@ -76,6 +78,10 @@ namespace NeuralNetworks
             std::vector<float> outputs(19*19, 0.f);
             auto res = m_analyzeCallback(inputs.data(), outputs.data());
             if(!res) throw std::runtime_error("unable to run CNN");
+            std::cout << "outputs:\n";
+            for(const auto o : outputs)
+                std::cout << o << " ";
+            std::cout << std::endl;
             return sotfmax(std::move(outputs));
         }
 

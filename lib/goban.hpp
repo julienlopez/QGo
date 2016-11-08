@@ -41,12 +41,18 @@ public:
      */
     void clear();
 
+    /**
+     * @brief returns the color of the last stone played, and EMPTY if none has been played yet.
+     */
+    QGo::Case lastStonePlayed() const;
+
 protected:
     QGo::Case& get(uint8_t x, uint8_t y) throw(std::invalid_argument);
 
 private:
     uint8_t m_size;
     std::vector<QGo::Case> m_array;
+    QGo::Case m_last_stone_played = QGo::Case::EMPTY;
 
     /**
     * \brief check if the move at (x,y) captures anything

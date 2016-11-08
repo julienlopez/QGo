@@ -1,15 +1,23 @@
 #include "mainwindow.hpp"
+
+#include "treemodel.hpp"
+
+#include "gametreewidget.hpp"
 #include "gobanwidget.hpp"
-#include "sgfreader.hpp"
-#include "game.hpp"
-#include "engine.hpp"
 #include "statelesstooltipsingleton.hpp"
 #include "statetooltipsingleton.hpp"
 #include "statetoolbaraction.hpp"
-#include <states/statemanager.hpp>
-#include "gametreewidget.hpp"
-#include <treemodel.hpp>
 
+#include "states/statemanager.hpp"
+
+#include "sgfreader.hpp"
+#include "game.hpp"
+#include "engine.hpp"
+
+#include "neuralnetworks/cntkwriter.hpp"
+#include "neuralnetworks/neuralnetwork.hpp"
+
+#include <QApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QTextStream>
@@ -19,6 +27,8 @@
 #include <QActionGroup>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+
+#include <iostream>
 
 MainWindow::MainWindow(QWidget* p)
     : QMainWindow(p)
@@ -37,6 +47,33 @@ MainWindow::MainWindow(QWidget* p)
 
     w->setLayout(vbLayout);
     setCentralWidget(w);
+
+    StatelessToolTipSingleton::addToolButton("show GoNet guess", "ask_gonet.png", [](){
+        std::cout << "GoNet" << std::endl;
+        auto goban = Engine::instance().goban().lock();
+        const auto encoded_goban = encode(*goban, (goban->lastStonePlayed() == QGo::Case::BLACK ? QGo::Case::WHITE : QGo::Case::BLACK));
+        std::vector<float> inputs(encoded_goban.size());
+        std::copy(begin(encoded_goban), end(encoded_goban), begin(inputs));
+
+        //std::vector<QString> suffixes{/*".0",*/ ".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9", ""};
+        std::vector<QString> suffixes{".1"};
+        for(const auto& n : suffixes)
+        {
+            std::cout << ("ConvBatchNorm1"+n).toStdString() << std::endl;
+            NeuralNetworks::NeuralNetwork nn(QDir(qApp->applicationDirPath()).filePath("../neural_network/trained_nets/ConvBatchNorm1"+n).toStdString());
+            //for(const auto s : inputs)
+            //{
+            //    std::cout << s << " ";
+            //}
+            //std::cout << std::endl;
+            const auto outputs = nn(inputs);
+            for(const auto s : outputs)
+            {
+                std::cout << s << " ";
+            }
+            std::cout << std::endl;
+        }
+    });
 
     createActions();
     createMenuBars();
