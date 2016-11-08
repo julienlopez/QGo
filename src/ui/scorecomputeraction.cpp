@@ -14,6 +14,6 @@ void computeScore()
     ScoreComputer::computeScore(goban);
 }
 
-bool registered = StatelessToolTipSingleton::addToolButton("", "", &computeScore);
+bool registered = StatelessToolTipSingleton::addToolButton("Compute Score", "", &computeScore);
 
 }
