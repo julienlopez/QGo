@@ -29,3 +29,22 @@ void CntkWriter::addLine(const GobanVector_t& current_state, const GobanVector_t
     std::transform(begin(current_state), end(current_state), std::ostream_iterator<std::string>(o, " "), conv);
     o << "\n";
 }
+
+int8_t encodeColor(QGo::Case color, QGo::Case color_to_play)
+{
+    if(color == QGo::EMPTY) return 0;
+    return color == color_to_play ? 1 : -1;
+}
+
+CntkWriter::GobanVector_t encode(const Goban& goban, QGo::Case color_to_play)
+{
+    CntkWriter::GobanVector_t res(goban.size() * goban.size(), 0);
+    for(uint8_t y = 0; y < goban.size(); y++)
+    {
+        for(uint8_t x = 0; x < goban.size(); x++)
+        {
+            res[x + y * goban.size()] = encodeColor(goban(x, y), color_to_play);
+        }
+    }
+    return res;
+}
