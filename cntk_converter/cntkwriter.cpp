@@ -1,5 +1,7 @@
 #include "cntkwriter.hpp"
 
+#include <random>
+
 CntkWriter::CntkWriter(const boost::filesystem::path &train_path): m_train_file(train_path.string()), m_test_file(), m_percentage(0.)
 {
     assert(m_train_file);
@@ -15,6 +17,7 @@ CntkWriter::CntkWriter(const boost::filesystem::path& train_path, const boost::f
 
 void CntkWriter::addLine(const GobanVector_t& current_state, const GobanVector_t& next_move)
 {
+    assert(current_state.size() == 19*19 && next_move.size() == 19*19);
     static std::random_device rd;
     static std::mt19937 generator(rd());
     static std::uniform_real_distribution<> distrib(0, 1);
