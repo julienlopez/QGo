@@ -36,5 +36,5 @@ DESTDIR = $$QGO_BIN
 
 include(boost.pri)
 
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++14
 # -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline -Wno-long-long -Wuninitialized -Wconversion

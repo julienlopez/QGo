@@ -21,7 +21,8 @@ SOURCES += engine.cpp \
     game.cpp \
     point.cpp \
     utils/utils.cpp \
-    scorecomputer.cpp
+    scorecomputer.cpp \
+    neuralnetworks/neuralnetwork.cpp
 
 HEADERS  += goban.hpp \
     globals.hpp \
@@ -40,4 +41,5 @@ HEADERS  += goban.hpp \
     utils/parametertrait.hpp \
     utils/tree.hpp \
     utils/boosttree.hpp \
-    scorecomputer.hpp
+    scorecomputer.hpp \
+    neuralnetworks/neuralnetwork.hpp
