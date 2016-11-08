@@ -7,10 +7,12 @@ TEMPLATE = app
 
 INCLUDEPATH += .
 INCLUDEPATH += ../lib
+INCLUDEPATH += $$BOOST_INCLUDE_PATH
 
 LIBS += -L$$QGO_BIN
 LIBS += -lQGoLib
-LIBS += -lboost_system$$BOOST_SUFFIX -lboost_filesystem$$BOOST_SUFFIX
+LIBS += -L$$BOOST_LIB_PATH
+LIBS += -l$$BOOST_PREFIXboost_system$$BOOST_SUFFIX -l$$BOOST_PREFIXboost_filesystem$$BOOST_SUFFIX
 
 OBJECTS_DIR = $$QGO_OBJ
 MOC_DIR = $$QGO_MOC

@@ -5,7 +5,10 @@ QT += core gui widgets
 TARGET = QGoLib
 TEMPLATE = lib
 
+CONFIG += staticlib
+
 INCLUDEPATH += .
+INCLUDEPATH += $$BOOST_INCLUDE_PATH
 
 OBJECTS_DIR = $$QGO_OBJ_LIB
 MOC_DIR = $$QGO_MOC_LIB
@@ -13,7 +16,8 @@ MOC_DIR = $$QGO_MOC_LIB
 QMAKE_CXX += -g --coverage
 QMAKE_LFLAGS += --coverage
 
-LIBS += -lboost_system$$BOOST_SUFFIX -lboost_filesystem$$BOOST_SUFFIX
+LIBS += -L$$BOOST_LIB_PATH
+LIBS += -l$$BOOST_PREFIXboost_system$$BOOST_SUFFIX -l$$BOOST_PREFIXboost_filesystem$$BOOST_SUFFIX
 
 SOURCES += engine.cpp \
     goban.cpp \
@@ -21,7 +25,9 @@ SOURCES += engine.cpp \
     game.cpp \
     point.cpp \
     utils/utils.cpp \
-    scorecomputer.cpp
+    scorecomputer.cpp \
+    neuralnetworks/neuralnetwork.cpp \
+    neuralnetworks/cntkwriter.cpp
 
 HEADERS  += goban.hpp \
     globals.hpp \
@@ -40,4 +46,6 @@ HEADERS  += goban.hpp \
     utils/parametertrait.hpp \
     utils/tree.hpp \
     utils/boosttree.hpp \
-    scorecomputer.hpp
+    scorecomputer.hpp \
+    neuralnetworks/neuralnetwork.hpp \
+    neuralnetworks/cntkwriter.hpp

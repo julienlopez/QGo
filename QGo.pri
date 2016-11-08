@@ -22,6 +22,10 @@ QGO_OBJ_CNTK_CONVERTER = $$QGO_ROOT/obj_cntk_converter
 
 QGO_MOC_CNTK_CONVERTER = $$QGO_ROOT/moc_cntk_converter
 
+QGO_OBJ_CNTK_MODEL_TESTER = $$QGO_ROOT/obj_cntk_model_tester
+
+QGO_MOC_CNTK_MODEL_TESTER = $$QGO_ROOT/moc_cntk_model_tester
+
 QGO_SRC = $$QGO_ROOT/src
 
 #QGO_INSTALL_PLUGINS = $$QGO_BIN/plugins
@@ -36,5 +40,5 @@ DESTDIR = $$QGO_BIN
 
 include(boost.pri)
 
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++14
 # -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wredundant-decls -Winline -Wno-long-long -Wuninitialized -Wconversion

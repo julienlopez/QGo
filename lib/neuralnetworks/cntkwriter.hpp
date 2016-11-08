@@ -1,6 +1,8 @@
 #ifndef __CNTKWRITER_HPP__
 #define __CNTKWRITER_HPP__
 
+#include "goban.hpp"
+
 #include <fstream>
 
 #include <boost/filesystem/path.hpp>
@@ -35,5 +37,7 @@ private:
     std::ofstream m_test_file;
     const double m_percentage;
 };
+
+CntkWriter::GobanVector_t encode(const Goban& goban, QGo::Case color_to_play);
 
 #endif // CNTKWRITER_H

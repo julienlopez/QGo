@@ -121,6 +121,7 @@ int GameTreeWidget::verticalOffset() const
 QRegion GameTreeWidget::visualRegionForSelection(const QItemSelection& selection) const
 {
     //TODO here
+    return {};
 }
 
 void GameTreeWidget::dataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight)

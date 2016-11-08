@@ -1,15 +1,15 @@
 include(../QGo.pri)
 
-QT += core
-QT -= gui
+QT -= core gui
 
-TARGET = cntk_converter
+TARGET = cntk_model_tester
 TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
+CONFIG -= Qt
 
-OBJECTS_DIR = $$QGO_OBJ_CNTK_CONVERTER
-MOC_DIR = $$QGO_MOC_CNTK_CONVERTER
+OBJECTS_DIR = $$QGO_OBJ_CNTK_MODEL_TESTER
+MOC_DIR = $$QGO_MOC_CNTK_MODEL_TESTER
 
 INCLUDEPATH += $$QGO_SRC
 INCLUDEPATH += ../lib

@@ -13,10 +13,12 @@ MOC_DIR = $$QGO_MOC_TESTS
 
 INCLUDEPATH += $$QGO_SRC $$QGO_3RD_PARTY_INCLUDE
 INCLUDEPATH += ../lib
+INCLUDEPATH += $$BOOST_INCLUDE_PATH
 
 LIBS += -L$$QGO_BIN
 LIBS += -lQGoLib
-LIBS += -lboost_system$$BOOST_SUFFIX -lboost_filesystem$$BOOST_SUFFIX
+LIBS += -L$$BOOST_LIB_PATH
+LIBS += -l$$BOOST_PREFIXboost_system$$BOOST_SUFFIX -l$$BOOST_PREFIXboost_filesystem$$BOOST_SUFFIX
 
 QMAKE_CXX += -g --coverage
 QMAKE_LFLAGS += --coverage
