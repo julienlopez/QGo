@@ -13,12 +13,12 @@
 *.a
 
 obj/*
-obj_lib/*
-obj_tests/*
+obj_*/*
 moc/*
-moc_tests/*
+moc_*/*
 bin/QGo*
 bin/tests*
-bin/cntk_converter.exe
+bin/*.exe
+bin/*.dll
 *.pro.user
 QGo.pri
