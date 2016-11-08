@@ -26,7 +26,8 @@ SOURCES += engine.cpp \
     point.cpp \
     utils/utils.cpp \
     scorecomputer.cpp \
-    neuralnetworks/neuralnetwork.cpp
+    neuralnetworks/neuralnetwork.cpp \
+    neuralnetworks/cntkwriter.cpp
 
 HEADERS  += goban.hpp \
     globals.hpp \
@@ -46,4 +47,5 @@ HEADERS  += goban.hpp \
     utils/tree.hpp \
     utils/boosttree.hpp \
     scorecomputer.hpp \
-    neuralnetworks/neuralnetwork.hpp
+    neuralnetworks/neuralnetwork.hpp \
+    neuralnetworks/cntkwriter.hpp

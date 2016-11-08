@@ -1,4 +1,4 @@
-#include "cntkwriter.hpp"
+#include "neuralnetworks/cntkwriter.hpp"
 
 #include "game.hpp"
 #include "goban.hpp"
@@ -129,10 +129,16 @@ void parseFile(const QFileInfo& path)
     {
         const auto game = SGFReader::parse(SGFReader::parseFileIntoLines(path.filePath().toStdWString()));
         total_nb_of_games++;
+        if(game.boardSize() != 19)
+        {
+            std::cout << "Unable to parse games of size " << (int)game.boardSize() << std::endl;
+            return;
+        }
         if(game.hasAlternativeMoves())
         {
             std::cout << "Unable to parse games with variations" << std::endl;
             nb_of_games_with_variations++;
+            return;
         }
         //auto goban = std::make_shared<Goban>(19);
         //game.loadMovesOnto(goban);

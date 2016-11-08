@@ -20,8 +20,4 @@ LIBS += -lQGoLib
 LIBS += -L$$BOOST_LIB_PATH
 LIBS += -l$$BOOST_PREFIXboost_system$$BOOST_SUFFIX -l$$BOOST_PREFIXboost_filesystem$$BOOST_SUFFIX
 
-SOURCES += main.cpp \
-    cntkwriter.cpp
-
-HEADERS += \
-    cntkwriter.hpp
+SOURCES += main.cpp
